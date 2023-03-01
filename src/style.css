@@ -6,5 +6,10 @@
 
 body {
   font-family: "Ubuntu", sans-serif;
-  @apply bg-body;
+  @apply bg-body text-text-color;
+}
+
+input,
+textarea {
+  @apply focus-visible:outline-primary;
 }

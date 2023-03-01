@@ -1,15 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../pages/Home.vue";
+import Notes from "../pages/Notes.vue";
 import Reminder from "../pages/Reminder.vue";
 import Settings from "../pages/Settings.vue";
 import Starred from "../pages/Starred.vue";
 import Weather from "../pages/Weather.vue";
+import Map from "../pages/Map.vue";
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home,
+    name: "notes",
+    component: Notes,
   },
   {
     path: "/reminder",
@@ -30,6 +31,11 @@ const routes = [
     path: "/starred",
     name: "starred",
     component: Starred,
+  },
+  {
+    path: "/map",
+    name: "map",
+    component: Map,
   },
 ];
 
