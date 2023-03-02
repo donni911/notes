@@ -42,7 +42,7 @@ export default {
         case "bg":
           return "bg-white hover:bg-secondary";
         case "bg-rounded":
-          return "bg-white hover:bg-secondary shadow-md rounded-full";
+          return "bg-muted hover:bg-secondary shadow-md rounded-full";
         default:
           return "";
       }
@@ -51,7 +51,7 @@ export default {
     fillComputed() {
       return this.fill
         ? "[&>svg>path]:fill-" + this.fill
-        : "[&>svg>path]:fill-primary";
+        : "[&>svg>path]:fill-white";
     },
   },
 };

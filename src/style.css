@@ -1,15 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+@import "vue-multiselect/dist/vue-multiselect.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "./styles/tailwind.css";
 
-body {
-  font-family: "Ubuntu", sans-serif;
-  @apply bg-body text-text-color;
-}
-
-input,
-textarea {
-  @apply focus-visible:outline-primary;
-}
+@import "./styles/reset.css";
+@import "./styles/multiselect.css";

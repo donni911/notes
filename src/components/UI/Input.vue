@@ -4,6 +4,8 @@
     class="w-full"
     :class="classes"
     :placeholder="placeholder"
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
   />
 </template>
 
@@ -16,6 +18,10 @@ export default {
     placeholder: {
       type: String,
     },
+    modelValue: {
+      type: String,
+    },
   },
+  emits: ["update:modelValue"],
 };
 </script>

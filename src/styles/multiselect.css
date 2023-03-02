@@ -1,0 +1,32 @@
+.multiselect__tags {
+  @apply border-2 cursor-pointer pb-2 h-[45px];
+}
+
+.multiselect__placeholder,
+.multiselect__single {
+  @apply m-0 p-0;
+}
+
+.multiselect__single {
+  @apply m-1;
+}
+
+.multiselect {
+  @apply text-[#9ca3af];
+}
+
+.multiselect__placeholder {
+  @apply text-base text-[#9ca3af];
+}
+
+.multiselect__select {
+  @apply h-full;
+}
+
+.multiselect__select::before .multiselect__option--highlight {
+  @apply top-[50%] -translate-x-[50%];
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+  @apply bg-secondary;
+}

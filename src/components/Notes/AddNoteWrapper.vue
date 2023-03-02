@@ -8,7 +8,7 @@
         :size="'lg'"
         :bg="'bg-rounded'"
       />
-      <AddNote v-else @close-note="closeNote" />
+      <AddNote v-else @close-note="closeNote" :isOpen="addNoteMode" />
     </Transition>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
 
   data() {
     return {
-      addNoteMode: true,
+      addNoteMode: false,
     };
   },
 
@@ -41,10 +41,6 @@ export default {
 </script>
 
 <style>
-.scale-enter-from {
-  @apply scale-0;
-}
-
 .scale-enter-active,
 .scale-leave-active {
   @apply transition;
@@ -52,6 +48,6 @@ export default {
 
 .scale-enter-from,
 .scale-leave-to {
-  @apply opacity-0;
+  @apply opacity-0 scale-0;
 }
 </style>

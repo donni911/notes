@@ -1,0 +1,13 @@
+body {
+  @apply bg-body text-text-color;
+}
+
+input,
+textarea {
+  @apply focus-visible:outline-primary;
+}
+
+svg {
+  width: 100%;
+  height: 100% !important;
+}

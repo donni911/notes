@@ -6,7 +6,7 @@
       >
         <font-awesome-icon icon="fa-solid fa-note-sticky " />
       </div>
-      <span>NOTES APP</span>
+      <span>EXPLORER NOTES</span>
     </div>
   </router-link>
 </template>
