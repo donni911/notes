@@ -1,13 +1,13 @@
 <template>
   <multiselect
-    v-model="value"
+    :modelValue="selectedOption"
+    @select="$emit('update:modelValue', $event.priority)"
     :placeholder="placeholder"
     :options="options"
     :searchable="false"
     :showLabels="false"
     track-by="name"
     label="name"
-    @select="actionSelect"
   >
   </multiselect>
 </template>
@@ -17,17 +17,33 @@ import Multiselect from "vue-multiselect";
 
 export default {
   components: { Multiselect },
-  props: ["placeholder", "value"],
+  props: {
+    modelValue: {
+      type: String,
+      default: "",
+    },
+    placeholder: {
+      type: String,
+      default: "Placeholder",
+    },
+  },
 
   data() {
     return {
-      value: "",
-      optionSelect: [
+      options: [
         { name: "Low priority", priority: "low" },
         { name: "Medium priority", priority: "medium" },
         { name: "High priority", priority: "high" },
       ],
     };
+  },
+
+  computed: {
+    selectedOption() {
+      return this.$data.options.find(
+        (option) => option.priority === this.$props.modelValue
+      );
+    },
   },
 
   methods: {

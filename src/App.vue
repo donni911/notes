@@ -4,7 +4,11 @@
       <section class="flex h-full">
         <sidebar :menu-items="menuItems" />
         <section class="w-full p-4 relative">
-          <router-view />
+          <router-view v-slot="{ Component }">
+            <transition name="fade">
+              <component :is="Component" />
+            </transition>
+          </router-view>
         </section>
       </section>
     </div>
@@ -12,6 +16,9 @@
 </template>
 <script>
 import Sidebar from "./components/Sidebar.vue";
+
+import { mapActions, mapState } from "pinia";
+import { noteStore } from "./store/notes.js";
 
 export default {
   components: {
@@ -31,7 +38,7 @@ export default {
           linkName: "notes",
           name: "Notes",
           icon: "fa-solid fa-table-list",
-          count: 98,
+          // count: this.notes.length,
         },
         {
           linkName: "reminder",
@@ -44,5 +51,28 @@ export default {
       ],
     };
   },
+
+  computed: {
+    ...mapState(noteStore, ["notes"]),
+  },
+
+  methods: {
+    ...mapActions(noteStore, ["initStoreNotes"]),
+  },
+
+  created() {
+    this.initStoreNotes();
+  },
 };
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  @apply transition-opacity;
+}
+.fade-enter-from,
+.fade-leave-to {
+  @apply opacity-0;
+}
+</style>

@@ -1,7 +1,6 @@
 <template>
   <input
     type="text"
-    class="w-full"
     :class="classes"
     :placeholder="placeholder"
     :value="modelValue"

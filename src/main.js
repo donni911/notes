@@ -10,6 +10,7 @@ import router from "./router";
 import { createPinia } from "pinia";
 // tooltip
 import VueTippy from "vue-tippy";
+import "tippy.js/animations/scale.css";
 import "tippy.js/dist/tippy.css";
 
 //icons
@@ -33,6 +34,8 @@ import {
   faPen,
   faCheck,
   faTrash,
+  faBorderAll,
+  faGripLines,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faUserSecret,
@@ -51,14 +54,22 @@ library.add(
   faMap,
   faPen,
   faCheck,
-  faTrash
+  faTrash,
+  faBorderAll,
+  faGripLines
 );
 
 const pinia = createPinia();
 
 createApp(App)
   .use(pinia)
+  .use(createPinia())
   .use(router)
-  .use(VueTippy)
+  .use(VueTippy, {
+    defaultProps: {
+      placement: "auto",
+      arrow: false,
+    },
+  })
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import AddNote from "../UI/AddNote.vue";
+import AddNote from "./AddNote.vue";
 import Button from "../UI/Button.vue";
 
 export default {

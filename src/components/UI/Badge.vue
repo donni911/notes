@@ -22,7 +22,7 @@ export default {
         case "medium":
           return "bg-warning text-white";
         case "low":
-          return "bg-primary text-white";
+          return "bg-success text-white";
         default:
           return "bg-black text-white";
       }

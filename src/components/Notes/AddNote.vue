@@ -3,9 +3,9 @@
     class="block overflow-hidden transition w-[300px] max-h-[500px] bg-article shadow relative p-2 rounded"
   >
     <div class="flex items-center mb-2">
-      <Priority
+      <priority-select
+        v-model="priorityValue"
         :placeholder="'Select priority'"
-        @selectedValue="selectedMultiselectValue"
       />
       <div class="ml-auto">
         <Button
@@ -20,7 +20,7 @@
       <Input
         v-model="title"
         @submit.prevent
-        :classes="'p-1 body-inner border-2 border-body-inner mb-2 rounded'"
+        :classes="'p-1 body-inner w-full border-2 border-body-inner mb-2 rounded'"
         :placeholder="'Note Title'"
       />
       <textarea
@@ -43,17 +43,20 @@
 </template>
 
 <script>
-import ActionButton from "./ActionButton.vue";
-import Button from "./Button.vue";
-import Input from "./Input.vue";
-import Priority from "./Priority.vue";
+import ActionButton from "../UI/ActionButton.vue";
+import Button from "../UI/Button.vue";
+import Input from "../UI/Input.vue";
+import PrioritySelect from "../UI/PrioritySelect.vue";
+
+import { mapActions } from "pinia";
+import { noteStore } from "@/store/notes.js";
 
 export default {
   components: {
     ActionButton,
     Button,
     Input,
-    Priority,
+    PrioritySelect,
   },
 
   props: {
@@ -64,22 +67,21 @@ export default {
 
   data() {
     return {
-      title: "",
-      description: "",
-      priorityValue: null,
+      title: "ewq",
+      description: "ewq",
+      priorityValue: "low",
       isFilled: true,
     };
   },
 
   methods: {
-    selectedMultiselectValue(value) {
-      this.$data.priorityValue = value;
-    },
+    ...mapActions(noteStore, ["addNoteAction"]),
 
     cleanValues() {
       this.$data.title = "";
       this.$data.description = "";
       this.$data.priorityValue = null;
+      this.isFilled = false;
     },
 
     handleClickOutside(event) {
@@ -90,16 +92,15 @@ export default {
 
     submitNote() {
       if (this.title && this.description && this.priorityValue) {
-        this.isFilled = false;
-        this.cleanValues();
         this.$emit("closeNote");
-        console.log({
+
+        this.addNoteAction({
           title: this.title,
           description: this.description,
-          priority: this.priorityValue,
+          importanceLevel: this.priorityValue,
         });
-      } else {
-        this.isFilled = false;
+
+        this.cleanValues();
       }
     },
   },

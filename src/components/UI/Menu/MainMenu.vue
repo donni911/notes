@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ButtonLink from "../ButtonLink.vue";
+import ButtonLink from "./ButtonLink.vue";
 export default {
   components: { ButtonLink },
   inject: ["menuItems"],
