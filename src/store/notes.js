@@ -28,7 +28,6 @@ export const noteStore = defineStore("noteStore", {
       console.log(localStorage.noteLayout);
       if (localStorage.noteLayout) {
         this.rowLayout = JSON.parse(localStorage.noteLayout);
-        console.log(this.rowLayout);
       } else {
         this.rowLayout = false;
       }

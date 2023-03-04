@@ -11,7 +11,7 @@
           v-tippy="'Toggle layout'"
           class="p-2 -m-2 active:scale-90 group"
         >
-          <transition mode="out-in">
+          <transition name="fade" mode="out-in">
             <div
               v-if="!rowLayout"
               class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body group-hover:[&>svg>path]:fill-muted"

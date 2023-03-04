@@ -15,57 +15,38 @@
       </transition>
 
       <div
-        class="grid gap-4 flex-shrink-0"
+        class="grid gap-4 items-baseline flex-shrink-0"
         :class="{ 'grid-cols-2 ': editable }"
       >
         <Transition mode="out-in" name="fade">
           <div v-if="editable">
-            <button
+            <SvgButton
               v-if="!editMode"
-              v-tippy="'Edit'"
-              @click="editNote"
-              class="p-2 -m-2 active:scale-90 group"
-            >
-              <div
-                class="w-4 h-4 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-muted group-hover:[&>svg>path]:fill-body"
-              >
-                <font-awesome-icon icon="fa-solid fa-pen" />
-              </div>
-            </button>
-
-            <button
+              @clickEvent="editNote"
+              :tippyCaption="'Edit'"
+              :icon="'fa-solid fa-pen'"
+            />
+            <SvgButton
               v-else
-              v-tippy="'Save'"
-              @click="closeEdit"
-              class="p-2 -m-2 active:scale-90 group"
-            >
-              <div
-                class="w-4 h-4 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-muted group-hover:[&>svg>path]:fill-body"
-              >
-                <font-awesome-icon icon="fa-solid fa-check" />
-              </div>
-            </button>
+              @clickEvent="closeEdit"
+              :tippyCaption="'Save'"
+              :icon="'fa-solid fa-check'"
+            />
           </div>
         </Transition>
 
         <Transition mode="out-in" name="fade">
-          <button
+          <SvgButton
             v-if="!editMode"
-            v-tippy="'Save this as important'"
-            @click="setStar"
-            class="p-2 -m-2 active:scale-90 group"
-          >
-            <div
-              class="w-4 h-4 flex items-center justify-center [&>svg>path]:transition"
-              :class="{
-                '[&>svg>path]:fill-yellow-400': note.starred,
-                ' [&>svg>path]:fill-muted group-hover:[&>svg>path]:fill-yellow-200':
-                  !note.starred,
-              }"
-            >
-              <font-awesome-icon icon="fa-solid fa-star" />
-            </div>
-          </button>
+            @clickEvent="setStar"
+            :icon="'fa-solid fa-star'"
+            :tippyCaption="'Save this as important'"
+            :classes="{
+              '[&>svg>path]:fill-yellow-400': note.starred,
+              ' [&>svg>path]:fill-muted group-hover:[&>svg>path]:fill-yellow-200':
+                !note.starred,
+            }"
+          />
 
           <tippy
             v-else
@@ -76,13 +57,10 @@
             ref="tippySubmit"
           >
             <template #default>
-              <button class="p-2 -m-2 active:scale-90 group" v-tippy="'Delete'">
-                <div
-                  class="w-4 h-4 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-muted group-hover:[&>svg>path]:fill-body"
-                >
-                  <font-awesome-icon icon="fa-solid fa-trash" />
-                </div>
-              </button>
+              <SvgButton
+                :icon="'fa-solid fa-trash'"
+                :tippy-caption="'Delete'"
+              />
             </template>
 
             <template #content="{ hide }">
@@ -145,6 +123,7 @@ import PrioritySelect from "../UI/PrioritySelect.vue";
 
 import { mapActions } from "pinia";
 import { noteStore } from "@/store/notes.js";
+import SvgButton from "../UI/SvgButton.vue";
 
 export default {
   components: {
@@ -153,6 +132,7 @@ export default {
     Tippy,
     Input,
     PrioritySelect,
+    SvgButton,
   },
 
   data() {

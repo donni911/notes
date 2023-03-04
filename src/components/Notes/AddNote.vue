@@ -67,9 +67,9 @@ export default {
 
   data() {
     return {
-      title: "ewq",
-      description: "ewq",
-      priorityValue: "low",
+      title: "",
+      description: "",
+      priorityValue: null,
       isFilled: true,
     };
   },
