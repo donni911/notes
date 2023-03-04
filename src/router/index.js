@@ -4,6 +4,7 @@ import Reminder from "../pages/Reminder.vue";
 import Settings from "../pages/Settings.vue";
 import Starred from "../pages/Starred.vue";
 import Weather from "../pages/Weather.vue";
+import Chat from "../pages/Chat.vue";
 import Map from "../pages/Map.vue";
 
 const routes = [
@@ -36,6 +37,11 @@ const routes = [
     path: "/map",
     name: "map",
     component: Map,
+  },
+  {
+    path: "/chat",
+    name: "chat",
+    component: Chat,
   },
 ];
 

@@ -24,7 +24,6 @@ export default {
   components: {
     Sidebar,
   },
-
   provide() {
     return {
       menuItems: this.$data.menuItems,
@@ -38,7 +37,6 @@ export default {
           linkName: "notes",
           name: "Notes",
           icon: "fa-solid fa-table-list",
-          // count: this.notes.length,
         },
         {
           linkName: "reminder",
@@ -48,6 +46,7 @@ export default {
         { linkName: "starred", name: "Starred", icon: "fa-solid fa-star" },
         { linkName: "weather", name: "Weather", icon: "fa-solid fa-sun" },
         { linkName: "map", name: "Map", icon: "fa-solid fa-map" },
+        { linkName: "chat", name: "Chat", icon: "fa-solid fa-comments" },
       ],
     };
   },

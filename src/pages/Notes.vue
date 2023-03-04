@@ -2,10 +2,11 @@
   <div class="w-full h-full relative pb-2">
     <div class="flex items-center mb-4">
       <Input
+        v-model="searchNote"
         :placeholder="'Search note'"
         :classes="'shadow-md rounded-full px-4 py-3  w-[75%]'"
       />
-      <div class="mx-auto flex">
+      <div class="mx-auto gap-6 flex">
         <button
           @click="toggleLayout"
           v-tippy="'Toggle layout'"
@@ -26,6 +27,11 @@
             </div>
           </transition>
         </button>
+        <SvgButton
+          @clickEvent="actionSort"
+          :tippyCaption="'Importance sort'"
+          :icon="'fa-solid fa-sort'"
+        />
       </div>
     </div>
     <div
@@ -38,7 +44,7 @@
       v-else
       class="py-4 h-[calc(100%-50px)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable]"
     >
-      <NotesList :notes="notes" :editable="true" />
+      <NotesList :notes="computedNotes" :editable="true" />
     </div>
     <AddNoteWrapper />
   </div>
@@ -46,6 +52,7 @@
 
 <script>
 import Input from "../components/UI/Input.vue";
+import SvgButton from "../components/UI/SvgButton.vue";
 import AddNoteWrapper from "../components/Notes/AddNoteWrapper.vue";
 import NotesList from "../components/Notes/NotesList.vue";
 
@@ -53,12 +60,59 @@ import { mapState, mapActions } from "pinia";
 import { noteStore } from "../store/notes.js";
 
 export default {
-  components: { Input, AddNoteWrapper, NotesList },
+  components: { Input, AddNoteWrapper, NotesList, SvgButton },
 
-  computed: { ...mapState(noteStore, ["notes", "starNotes", "rowLayout"]) },
+  data() {
+    return {
+      searchNote: "",
+      isSorted: false,
+    };
+  },
+
+  computed: {
+    ...mapState(noteStore, ["notes", "starNotes", "rowLayout"]),
+
+    computedNotes() {
+      if (!this.searchNote) {
+        return this.notes;
+      }
+      return this.notes.filter((note) =>
+        note.title.toLowerCase().includes(this.searchNote)
+      );
+    },
+  },
 
   methods: {
     ...mapActions(noteStore, ["initStoreNotes", "toggleLayoutAction"]),
+
+    actionSort() {
+      this.isSorted = !this.isSorted;
+      if (this.isSorted) {
+        this.sortNotes();
+      } else {
+        this.unSortNotes();
+      }
+    },
+
+    sortNotes() {
+      return this.notes.sort(function (a, b) {
+        if (a.importanceLevel.priorityLevel > b.importanceLevel.priorityLevel)
+          return 1;
+        if (a.importanceLevel.priorityLevel < b.importanceLevel.priorityLevel)
+          return -1;
+        return 0;
+      });
+    },
+
+    unSortNotes() {
+      return this.notes.sort(function (a, b) {
+        if (a.importanceLevel.priorityLevel < b.importanceLevel.priorityLevel)
+          return 1;
+        if (a.importanceLevel.priorityLevel > b.importanceLevel.priorityLevel)
+          return -1;
+        return 0;
+      });
+    },
 
     toggleLayout() {
       this.toggleLayoutAction();

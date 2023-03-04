@@ -94,6 +94,7 @@ export default {
       if (this.title && this.description && this.priorityValue) {
         this.$emit("closeNote");
 
+        console.log(this.priorityValue);
         this.addNoteAction({
           title: this.title,
           description: this.description,

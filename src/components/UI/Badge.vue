@@ -4,8 +4,7 @@
     :class="[computedClasses]"
   >
     <p>
-      <span class="capitalize">{{ type }} </span>
-      priority
+      <span class="capitalize">{{ type.name }} </span>
     </p>
   </div>
 </template>
@@ -16,7 +15,7 @@ export default {
 
   computed: {
     computedClasses() {
-      switch (this.type) {
+      switch (this.type.priority) {
         case "high":
           return "bg-error text-white";
         case "medium":

@@ -14,6 +14,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
+    "firebase-tools": "^11.24.0",
     "pinia": "^2.0.32",
     "vue": "^3.2.36",
     "vue-multiselect": "^3.0.0-alpha.2",

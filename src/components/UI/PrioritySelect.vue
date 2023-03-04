@@ -1,7 +1,7 @@
 <template>
   <multiselect
     :modelValue="selectedOption"
-    @select="$emit('update:modelValue', $event.priority)"
+    @select="$emit('update:modelValue', $event)"
     :placeholder="placeholder"
     :options="options"
     :searchable="false"
@@ -31,9 +31,9 @@ export default {
   data() {
     return {
       options: [
-        { name: "Low priority", priority: "low" },
-        { name: "Medium priority", priority: "medium" },
-        { name: "High priority", priority: "high" },
+        { name: "Low priority", priority: "low", priorityLevel: 3 },
+        { name: "Medium priority", priority: "medium", priorityLevel: 2 },
+        { name: "High priority", priority: "high", priorityLevel: 1 },
       ],
     };
   },
