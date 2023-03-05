@@ -5,7 +5,7 @@
     v-tippy="tippyCaption"
   >
     <div
-      class="w-4 h-4 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-muted group-hover:[&>svg>path]:fill-body"
+      class="w-4 h-4 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-muted betterhover:group-hover:[&>svg>path]:fill-body"
       :class="classes"
     >
       <font-awesome-icon :icon="icon" />

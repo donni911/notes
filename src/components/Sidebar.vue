@@ -3,17 +3,17 @@
     <SvgButton
       @click="openedSidebar = true"
       :icon="'fa-solid fa-bars'"
-      class="md:hidden absolute z-30 bg-side top-[25%] shadow left-0 dark:bg-body-dark-side bg-white rounded-tr-md rounded-br-md transition-transform"
-      :class="{ '-translate-x-full ': openedSidebar }"
-      :classes="'w-8 h-8 [&>svg>path]:fill-white '"
+      class="md:hidden absolute z-30 bg-side top-[25%] shadow right-2 dark:bg-body-dark-side bg-white rounded-tl-md rounded-bl-md transition-transform"
+      :class="{ 'translate-x-full ': openedSidebar }"
+      :classes="'w-6 h-6 dark:[&>svg>path]:fill-white '"
     />
 
     <section
-      class="md:static absolute z-20 -md:-translate-x-full pt-4 pb-2 w-[255px] h-full flex flex-col shadow-md bg-white transition-colors dark:bg-body-dark-side shrink-0 transition-transform"
+      class="md:static absolute z-20 -md:-translate-x-full pt-4 pb-2 w-[255px] h-full flex flex-col shadow-md bg-white transition dark:bg-body-dark-side shrink-0"
       :class="{ '-md:translate-x-0': openedSidebar }"
     >
       <Logo />
-      <MainMenu />
+      <MainMenu @clickEvent="openedSidebar = false" />
       <SecondaryMenu />
     </section>
     <div

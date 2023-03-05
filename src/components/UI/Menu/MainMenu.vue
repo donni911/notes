@@ -1,7 +1,12 @@
 <template>
   <nav class="mb-auto">
     <ul>
-      <ButtonLink v-for="item in menuItems" :key="item" :item="item" />
+      <ButtonLink
+        @click="$emit('clickEvent')"
+        v-for="item in menuItems"
+        :key="item"
+        :item="item"
+      />
     </ul>
   </nav>
 </template>

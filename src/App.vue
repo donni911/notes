@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[100vh] flex items-center justify-center">
+  <div class="h-[100dvh] flex items-center justify-center">
     <div
       class="bg-body-inner transition-colors dark:bg-body-dark max-w-[1030px] w-full h-full md:h-[765px] rounded overflow-hidden"
     >

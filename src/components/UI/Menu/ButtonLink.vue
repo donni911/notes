@@ -8,7 +8,7 @@
     <slot>
       <router-link
         :to="{ name: item.linkName }"
-        class="group after:absolute after:inset-0 after:content-[''] transition-colors dark:text-dark-text hover:before:bg-body-inner dark:hover:before:bg-body-dark hover:before:-translate-x-[85%] mx-4 isolate before:absolute before:inset-0 before:content-[''] before:bg-accent dark:before:bg-body-dark before:rounded-r-full before:shadow-sm before:-z-10 before:transition before:-translate-x-full"
+        class="group after:absolute after:inset-0 after:content-[''] transition-colors dark:text-dark-text betterhover:hover:before:bg-body-inner dark:betterhover:hover:before:bg-body-dark betterhover:hover:before:-translate-x-[85%] mx-4 isolate before:absolute before:inset-0 before:content-[''] before:bg-accent dark:before:bg-body-dark before:rounded-r-full before:shadow-sm before:-z-10 before:transition before:-translate-x-full"
         >{{ item.name }}</router-link
       >
     </slot>

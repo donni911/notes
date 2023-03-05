@@ -4,7 +4,7 @@
       <Input
         v-model="searchNote"
         :placeholder="'Search note'"
-        :classes="'shadow-md rounded-full px-4 py-3  w-[75%]'"
+        :classes="'shadow-md rounded-full px-4 py-3 w-[75%]'"
       />
       <div
         class="ml-2 gap-6 flex justify-center w-[25%]"
@@ -18,13 +18,13 @@
           <transition name="fade" mode="out-in">
             <div
               v-if="!rowLayout"
-              class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body transition-colors dark:[&>svg>path]:fill-body-dark-inner group-hover:[&>svg>path]:fill-muted"
+              class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body transition-colors dark:[&>svg>path]:fill-body-dark-inner betterhover:group-hover:[&>svg>path]:fill-muted"
             >
               <font-awesome-icon icon="fa-solid fa-border-all" />
             </div>
             <div
               v-else
-              class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body transition-colors dark:[&>svg>path]:fill-body-dark-inner group-hover:[&>svg>path]:fill-muted"
+              class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body transition-colors dark:[&>svg>path]:fill-body-dark-inner betterhover:group-hover:[&>svg>path]:fill-muted"
             >
               <font-awesome-icon icon="fa-solid fa-grip-lines" />
             </div>
@@ -47,7 +47,7 @@
 
     <div
       v-else
-      class="py-4 h-[calc(100%-50px)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] pr-4"
+      class="py-4 h-[calc(100%-50px)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] pr-2"
     >
       <NotesList :notes="computedNotes" :editable="true" />
     </div>

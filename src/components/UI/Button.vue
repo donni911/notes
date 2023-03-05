@@ -40,9 +40,9 @@ export default {
     bgComputed() {
       switch (this.bg) {
         case "bg":
-          return "bg-white hover:bg-secondary";
+          return "bg-white betterhover:hover::bg-secondary";
         case "bg-rounded":
-          return "bg-muted hover:bg-secondary shadow-md rounded-full dark:bg-body-dark-side";
+          return "bg-muted betterhover:hover::bg-secondary shadow-md rounded-full dark:bg-body-dark-side";
         default:
           return "";
       }

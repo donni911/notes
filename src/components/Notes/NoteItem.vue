@@ -45,7 +45,7 @@
             :tippyCaption="'Save this as important'"
             :classes="{
               '[&>svg>path]:fill-yellow-400': note.starred,
-              '[&>svg>path]:fill-muted dark:[&>svg>path]:fill-body group-hover:[&>svg>path]:fill-yellow-200':
+              '[&>svg>path]:fill-muted dark:[&>svg>path]:fill-body betterhover:group-hover:[&>svg>path]:fill-yellow-200':
                 !note.starred,
             }"
           />
@@ -78,7 +78,7 @@
                   </button>
                   <button
                     @click="hide()"
-                    class="py-1 px-2 mx-1 border-2 border-muted transition-colors hover:bg-muted rounded"
+                    class="py-1 px-2 mx-1 border-2 border-muted transition-colors betterhover:hover:bg-muted rounded"
                   >
                     NO
                   </button>
@@ -114,7 +114,7 @@
       </transition>
       <transition name="fade">
         <div v-if="note.time && !editMode" class="mt-2 text-sm text-gray-500">
-          <i>{{ "Task was added at " + note.time }}</i>
+          <i>{{ `Task was ${edited ? "edited" : "added"} at ` + note.time }}</i>
         </div>
       </transition>
     </div>
@@ -146,7 +146,7 @@ export default {
   data() {
     return {
       editMode: false,
-      contentHeight: 0,
+      edited: false,
     };
   },
 
@@ -192,7 +192,8 @@ export default {
         hour: "numeric",
         minute: "numeric",
       })),
-        this.editNoteAction();
+        (this.edited = true);
+      this.editNoteAction();
     },
 
     setStar() {
