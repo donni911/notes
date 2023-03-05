@@ -6,22 +6,25 @@
         :placeholder="'Search note'"
         :classes="'shadow-md rounded-full px-4 py-3  w-[75%]'"
       />
-      <div class="mx-auto gap-6 flex">
+      <div
+        class="ml-2 gap-6 flex justify-center w-[25%]"
+        v-if="computedNotes.length"
+      >
         <button
           @click="toggleLayout"
           v-tippy="'Toggle layout'"
-          class="p-2 -m-2 active:scale-90 group"
+          class="p-2 -m-2 active:scale-90 group -md:hidden"
         >
           <transition name="fade" mode="out-in">
             <div
               v-if="!rowLayout"
-              class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body group-hover:[&>svg>path]:fill-muted"
+              class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body transition-colors dark:[&>svg>path]:fill-body-dark-inner group-hover:[&>svg>path]:fill-muted"
             >
               <font-awesome-icon icon="fa-solid fa-border-all" />
             </div>
             <div
               v-else
-              class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body group-hover:[&>svg>path]:fill-muted"
+              class="w-6 h-6 flex items-center justify-center [&>svg>path]:transition [&>svg>path]:fill-body transition-colors dark:[&>svg>path]:fill-body-dark-inner group-hover:[&>svg>path]:fill-muted"
             >
               <font-awesome-icon icon="fa-solid fa-grip-lines" />
             </div>
@@ -31,6 +34,7 @@
           @clickEvent="actionSort"
           :tippyCaption="'Importance sort'"
           :icon="'fa-solid fa-sort'"
+          :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
         />
       </div>
     </div>
@@ -40,9 +44,10 @@
     >
       <h4 class="text-muted">EMPTY LIST</h4>
     </div>
+
     <div
       v-else
-      class="py-4 h-[calc(100%-50px)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable]"
+      class="py-4 h-[calc(100%-50px)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] pr-4"
     >
       <NotesList :notes="computedNotes" :editable="true" />
     </div>
@@ -83,7 +88,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(noteStore, ["initStoreNotes", "toggleLayoutAction"]),
+    ...mapActions(noteStore, [
+      "initStoreNotes",
+      "toggleLayoutAction",
+      "editNoteAction",
+    ]),
 
     actionSort() {
       this.isSorted = !this.isSorted;
@@ -92,6 +101,7 @@ export default {
       } else {
         this.unSortNotes();
       }
+      this.editNoteAction();
     },
 
     sortNotes() {

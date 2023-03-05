@@ -19,7 +19,7 @@ export default {
   components: { Multiselect },
   props: {
     modelValue: {
-      type: String,
+      type: Object || String,
       default: "",
     },
     placeholder: {
@@ -41,7 +41,7 @@ export default {
   computed: {
     selectedOption() {
       return this.$data.options.find(
-        (option) => option.priority === this.$props.modelValue
+        (option) => option.priority === this.$props.modelValue?.priority
       );
     },
   },

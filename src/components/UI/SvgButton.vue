@@ -25,7 +25,7 @@ export default {
     },
 
     classes: {
-      type: String,
+      type: Object,
     },
   },
 };

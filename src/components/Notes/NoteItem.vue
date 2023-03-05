@@ -1,6 +1,6 @@
 <template>
   <li
-    class="rounded bg-white shadow-md p-4 transition"
+    class="rounded bg-white transition-colors dark:bg-dark-text shadow-md p-4"
     :class="{ '': editMode }"
   >
     <div class="flex justify-between items-center">
@@ -18,22 +18,24 @@
         class="grid gap-4 items-baseline flex-shrink-0"
         :class="{ 'grid-cols-2 ': editable }"
       >
-        <Transition mode="out-in" name="fade">
-          <div v-if="editable">
+        <div v-if="editable">
+          <Transition mode="out-in" name="fade">
             <SvgButton
               v-if="!editMode"
               @clickEvent="editNote"
               :tippyCaption="'Edit'"
               :icon="'fa-solid fa-pen'"
+              :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
             />
             <SvgButton
               v-else
               @clickEvent="closeEdit"
               :tippyCaption="'Save'"
               :icon="'fa-solid fa-check'"
+              :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
             />
-          </div>
-        </Transition>
+          </Transition>
+        </div>
 
         <Transition mode="out-in" name="fade">
           <SvgButton
@@ -43,7 +45,7 @@
             :tippyCaption="'Save this as important'"
             :classes="{
               '[&>svg>path]:fill-yellow-400': note.starred,
-              ' [&>svg>path]:fill-muted group-hover:[&>svg>path]:fill-yellow-200':
+              '[&>svg>path]:fill-muted dark:[&>svg>path]:fill-body group-hover:[&>svg>path]:fill-yellow-200':
                 !note.starred,
             }"
           />
@@ -60,6 +62,7 @@
               <SvgButton
                 :icon="'fa-solid fa-trash'"
                 :tippy-caption="'Delete'"
+                :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
               />
             </template>
 
@@ -108,6 +111,11 @@
           class="mb-2 focus:outline-0 p-1 min-h-[35px] h-[150px] max-h-[250px] w-full body-inner border-2 border-body-inner rounded"
           placeholder="Note Description"
         />
+      </transition>
+      <transition name="fade">
+        <div v-if="note.time && !editMode" class="mt-2 text-sm text-gray-500">
+          <i>{{ "Task was added at " + note.time }}</i>
+        </div>
       </transition>
     </div>
   </li>
@@ -176,8 +184,15 @@ export default {
     },
 
     closeEdit() {
-      this.editNoteAction();
       this.$data.editMode = false;
+      (this.$props.note.time = new Date().toLocaleString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      })),
+        this.editNoteAction();
     },
 
     setStar() {

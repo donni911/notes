@@ -1,6 +1,7 @@
 <template>
   <input
     type="text"
+    class="dark:bg-dark-input transition-colors"
     :class="classes"
     :placeholder="placeholder"
     :value="modelValue"

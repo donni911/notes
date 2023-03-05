@@ -38,6 +38,7 @@ import {
   faGripLines,
   faComments,
   faSort,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faUserSecret,
@@ -60,7 +61,8 @@ library.add(
   faBorderAll,
   faGripLines,
   faComments,
-  faSort
+  faSort,
+  faBars
 );
 
 const pinia = createPinia();

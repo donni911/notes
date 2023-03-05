@@ -25,7 +25,6 @@ export const noteStore = defineStore("noteStore", {
         this.notes = [];
       }
 
-      console.log(localStorage.noteLayout);
       if (localStorage.noteLayout) {
         this.rowLayout = JSON.parse(localStorage.noteLayout);
       } else {
@@ -34,7 +33,19 @@ export const noteStore = defineStore("noteStore", {
     },
 
     addNoteAction(note) {
-      this.notes.push({ ...note, starred: false });
+      this.notes.push({
+        ...note,
+        starred: false,
+        time: new Date().toLocaleString("en-GB", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        }),
+      });
+
+      console.log(this.notes);
       this.updateLocalStorage();
     },
 

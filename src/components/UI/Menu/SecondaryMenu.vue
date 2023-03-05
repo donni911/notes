@@ -14,8 +14,8 @@
         }"
       >
         <a
-          href="https://github.com/donni911"
-          class="before:absolute before:content-[''] before:inset-0 mx-4"
+          href="https://github.com/donni911/notes"
+          class="before:absolute before:content-[''] before:inset-0 mx-4 dark:text-dark-text transition-colors"
           >Repository</a
         >
       </ButtonLink>

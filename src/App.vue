@@ -1,9 +1,11 @@
 <template>
   <div class="h-[100vh] flex items-center justify-center">
-    <div class="bg-body-inner w-[1030px] h-[765px] rounded overflow-hidden">
-      <section class="flex h-full">
+    <div
+      class="bg-body-inner transition-colors dark:bg-body-dark max-w-[1030px] w-full h-full md:h-[765px] rounded overflow-hidden"
+    >
+      <section class="flex h-full relative">
         <sidebar :menu-items="menuItems" />
-        <section class="w-full p-4 relative">
+        <section class="w-full p-2 md:p-4 relative">
           <router-view v-slot="{ Component }">
             <transition name="fade">
               <component :is="Component" />
@@ -48,6 +50,7 @@ export default {
         { linkName: "map", name: "Map", icon: "fa-solid fa-map" },
         { linkName: "chat", name: "Chat", icon: "fa-solid fa-comments" },
       ],
+      htmlElement: document.documentElement,
     };
   },
 
@@ -60,7 +63,28 @@ export default {
   },
 
   created() {
+    //initStore
     this.initStoreNotes();
+
+    //init theme
+    if (localStorage.darkTheme && JSON.parse(localStorage.darkTheme) == true) {
+      this.$data.htmlElement.classList.add("dark");
+    } else {
+      this.$data.htmlElement.classList.remove("dark");
+    }
+
+    //os theme switching
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        if (e.matches) {
+          this.$data.htmlElement.classList.add("dark");
+          localStorage.darkTheme = true;
+        } else {
+          this.$data.htmlElement.classList.remove("dark");
+          localStorage.darkTheme = false;
+        }
+      });
   },
 };
 </script>

@@ -1,5 +1,5 @@
 .multiselect__tags {
-  @apply border-2 cursor-pointer pb-2 h-[45px];
+  @apply border-2 cursor-pointer pb-2 h-[45px] dark:bg-dark-input;
 }
 
 .multiselect__placeholder,
@@ -8,7 +8,7 @@
 }
 
 .multiselect__single {
-  @apply m-1;
+  @apply m-1 dark:bg-dark-input;
 }
 
 .multiselect {

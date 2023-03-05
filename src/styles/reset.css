@@ -1,10 +1,10 @@
 body {
-  @apply bg-body text-text-color leading-5;
+  @apply bg-body dark:bg-body-dark-inner text-text-color leading-5;
 }
 
 input,
 textarea {
-  @apply focus-visible:outline-primary;
+  @apply focus-visible:outline-primary dark:bg-dark-input;
 }
 
 svg {

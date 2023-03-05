@@ -1,6 +1,6 @@
 <template>
   <article
-    class="block overflow-hidden transition w-[300px] max-h-[500px] bg-article shadow relative p-2 rounded"
+    class="block overflow-hidden transition w-[300px] max-h-[500px] dark:bg-body-dark-side bg-article shadow relative p-2 rounded"
   >
     <div class="flex items-center mb-2">
       <priority-select
@@ -25,7 +25,7 @@
       />
       <textarea
         v-model="description"
-        class="mb-2 focus:outline-0 p-1 min-h-[35px] h-[250px] max-h-[250px] w-full body-inner border-2 border-body-inner rounded"
+        class="mb-2 focus:outline-0 p-1 min-h-[35px] h-[250px] max-h-[250px] w-full body-inner border-2 border-body-inner dark:bg-dark-input rounded"
         placeholder="Note Description"
       />
     </div>
@@ -94,7 +94,6 @@ export default {
       if (this.title && this.description && this.priorityValue) {
         this.$emit("closeNote");
 
-        console.log(this.priorityValue);
         this.addNoteAction({
           title: this.title,
           description: this.description,
@@ -102,6 +101,8 @@ export default {
         });
 
         this.cleanValues();
+      } else {
+        this.$data.isFilled = false;
       }
     },
   },
