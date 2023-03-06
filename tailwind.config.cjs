@@ -45,11 +45,11 @@ module.exports = {
         "-md": { max: "767px" },
         // => @media (max-width: 767px) { ... }
 
-        "-sm": { max: "639px" },
-        // => @media (max-width: 639px) { ... }
+        "-sm": { max: "575px" },
+        // => @media (max-width: 575px) { ... }
 
-        sm: "640px",
-        // => @media (min-width: 640px) { ... }
+        sm: "576px",
+        // => @media (min-width: 576px) { ... }
 
         md: "768px",
         // => @media (min-width: 768px) { ... }

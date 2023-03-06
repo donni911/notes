@@ -24,7 +24,7 @@
       <button
         v-else-if="processing == true"
         type="button"
-        class="w-full text-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed"
+        class="w-full text-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md dark:text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed"
         disabled=""
       >
         <svg
@@ -50,10 +50,12 @@
         Processing...
       </button>
 
-      <div v-else-if="weather" class="grid md:grid-cols-2">
+      <div v-else-if="weather" class="grid md:grid-cols-[70%_30%]">
         <Weather-Card :weather="weather" />
       </div>
-      <div v-else class="w-full text-center uppercase">Type smth</div>
+      <div v-else class="w-full text-center uppercase dark:text-white">
+        Start typing!
+      </div>
     </transition>
   </div>
 </template>

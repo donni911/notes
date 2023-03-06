@@ -8,12 +8,13 @@
         :placeholder="'Select priority'"
       />
       <div class="ml-auto">
-        <Button
-          @click-event="$emit('closeNote')"
-          :icon="'fa-solid fa-close'"
-          :size="'md'"
-          :fill="'text'"
-        />
+        <button
+          @click="$emit('closeNote')"
+          class="[&>svg>path]:fill-text p-2 w-8 h-8 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full transition active:scale-90"
+          :class="[sizeComputed, bgComputed, fillComputed]"
+        >
+          <font-awesome-icon icon="fa-solid fa-close" />
+        </button>
       </div>
     </div>
     <div>
@@ -44,7 +45,6 @@
 
 <script>
 import ActionButton from "../UI/ActionButton.vue";
-import Button from "../UI/Button.vue";
 import Input from "../UI/Input.vue";
 import PrioritySelect from "../UI/PrioritySelect.vue";
 
@@ -54,7 +54,6 @@ import { noteStore } from "@/store/notes.js";
 export default {
   components: {
     ActionButton,
-    Button,
     Input,
     PrioritySelect,
   },

@@ -90,7 +90,6 @@
 
 <script>
 import Badge from "../UI/Badge.vue";
-import Button from "../UI/Button.vue";
 import SvgButton from "../UI/SvgButton.vue";
 import Input from "../UI/Input.vue";
 import PrioritySelect from "../UI/PrioritySelect.vue";
@@ -98,7 +97,6 @@ import PrioritySelect from "../UI/PrioritySelect.vue";
 export default {
   components: {
     Badge,
-    Button,
     Input,
     PrioritySelect,
     SvgButton,

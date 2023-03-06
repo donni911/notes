@@ -29,7 +29,6 @@ import Logo from "./UI/Logo.vue";
 
 import MainMenu from "./UI/Menu/MainMenu.vue";
 import SecondaryMenu from "./UI/Menu/SecondaryMenu.vue";
-import Button from "./UI/Button.vue";
 import SvgButton from "./UI/SvgButton.vue";
 
 export default {
@@ -37,7 +36,6 @@ export default {
     Logo,
     MainMenu,
     SecondaryMenu,
-    Button,
     SvgButton,
   },
 

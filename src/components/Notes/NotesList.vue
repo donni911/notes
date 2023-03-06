@@ -1,5 +1,5 @@
 <template>
-  <ul class="grid gap-4" :class="{ 'md:grid-cols-2': rowLayout }">
+  <ul class="grid gap-5" :class="{ 'md:grid-cols-2': rowLayout }">
     <TransitionGroup name="list">
       <note-item
         v-for="note in notes"

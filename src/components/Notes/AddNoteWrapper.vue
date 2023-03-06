@@ -1,13 +1,15 @@
 <template>
   <div class="absolute bottom-5 right-5">
     <Transition name="scale" mode="out-in">
-      <Button
+      <button
         v-if="!addNoteMode"
-        @click-event="addNote"
-        :icon="'fa-solid fa-plus'"
-        :size="'lg'"
-        :bg="'bg-rounded'"
-      />
+        @click="addNote"
+        class="[&>svg>path]:fill-white bg-muted betterhover:hover::bg-secondary shadow-md rounded-full dark:bg-body-dark-side p-3 w-12 h-12 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full transition active:scale-90"
+        :class="[sizeComputed, bgComputed, fillComputed]"
+      >
+        <font-awesome-icon icon="fa-solid fa-plus" />
+      </button>
+
       <AddNote v-else @close-note="closeNote" :isOpen="addNoteMode" />
     </Transition>
   </div>
@@ -15,12 +17,10 @@
 
 <script>
 import AddNote from "./AddNote.vue";
-import Button from "../UI/Button.vue";
 
 export default {
   components: {
     AddNote,
-    Button,
   },
 
   data() {
