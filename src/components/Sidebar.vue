@@ -9,7 +9,7 @@
     />
 
     <section
-      class="md:static absolute z-20 -md:-translate-x-full pt-4 pb-2 w-[255px] h-full flex flex-col shadow-md bg-white transition dark:bg-body-dark-side shrink-0"
+      class="md:static absolute z-20 -md:overflow-y-auto -md:-translate-x-full pt-4 pb-2 w-[255px] h-full flex flex-col shadow-md bg-white transition dark:bg-body-dark-side shrink-0"
       :class="{ '-md:translate-x-0': openedSidebar }"
     >
       <Logo />

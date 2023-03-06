@@ -82,7 +82,7 @@ export default {
         return this.notes;
       }
       return this.notes.filter((note) =>
-        note.title.toLowerCase().includes(this.searchNote)
+        note.title.toLowerCase().includes(this.searchNote.toLowerCase())
       );
     },
   },

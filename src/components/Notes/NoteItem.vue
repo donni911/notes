@@ -1,7 +1,6 @@
 <template>
   <li
     class="rounded bg-white transition-colors dark:bg-dark-text shadow-md p-4"
-    :class="{ '': editMode }"
   >
     <div class="flex justify-between items-center">
       <transition mode="out-in" name="fade">
