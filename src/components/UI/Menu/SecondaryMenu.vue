@@ -2,6 +2,7 @@
   <div>
     <ul>
       <ButtonLink
+        @click="$emit('clickEvent')"
         :item="{
           linkName: 'settings',
           name: 'Settings',
@@ -9,6 +10,7 @@
         }"
       />
       <ButtonLink
+        @click="$emit('clickEvent')"
         :item="{
           icon: 'fa-solid fa-code-branch',
         }"

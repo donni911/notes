@@ -15,18 +15,6 @@
 
 <script>
 export default {
-  props: {
-    icon: {
-      type: String,
-    },
-
-    tippyCaption: {
-      type: String,
-    },
-
-    classes: {
-      type: Object,
-    },
-  },
+  props: ["icon", "tippyCaption", "classes"],
 };
 </script>

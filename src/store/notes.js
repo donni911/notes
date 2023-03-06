@@ -32,8 +32,24 @@ export const noteStore = defineStore("noteStore", {
       }
     },
 
+    editNoteAction(note) {
+      console.log(note);
+      let findNote = this.notes.find((el) => el === note);
+      findNote.time = new Date().toLocaleString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      });
+
+      findNote.edited = true;
+
+      this.updateLocalStorage();
+    },
+
     addNoteAction(note) {
-      this.notes.push({
+      this.notes.unshift({
         ...note,
         starred: false,
         time: new Date().toLocaleString("en-GB", {
@@ -45,7 +61,6 @@ export const noteStore = defineStore("noteStore", {
         }),
       });
 
-      console.log(this.notes);
       this.updateLocalStorage();
     },
 
@@ -55,7 +70,7 @@ export const noteStore = defineStore("noteStore", {
       this.updateLocalStorage();
     },
 
-    editNoteAction() {
+    updateNoteAction() {
       this.updateLocalStorage();
     },
 

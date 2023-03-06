@@ -1,93 +1,16 @@
 <template>
   <li
-    class="rounded bg-white transition-colors dark:bg-dark-text shadow-md p-4"
+    class="rounded bg-white dark:bg-dark-text transition-colors shadow-md p-4"
   >
-    <div class="flex justify-between items-center">
-      <transition mode="out-in" name="fade">
-        <Badge v-if="!editMode" :type="note.importanceLevel" />
-        <priority-select
-          v-else
-          v-model="note.importanceLevel"
-          class="mr-8"
-          :placeholder="'Select priority'"
-        />
-      </transition>
-
-      <div
-        class="grid gap-4 items-baseline flex-shrink-0"
-        :class="{ 'grid-cols-2 ': editable }"
-      >
-        <div v-if="editable">
-          <Transition mode="out-in" name="fade">
-            <SvgButton
-              v-if="!editMode"
-              @clickEvent="editNote"
-              :tippyCaption="'Edit'"
-              :icon="'fa-solid fa-pen'"
-              :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
-            />
-            <SvgButton
-              v-else
-              @clickEvent="closeEdit"
-              :tippyCaption="'Save'"
-              :icon="'fa-solid fa-check'"
-              :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
-            />
-          </Transition>
-        </div>
-
-        <Transition mode="out-in" name="fade">
-          <SvgButton
-            v-if="!editMode"
-            @clickEvent="setStar"
-            :icon="'fa-solid fa-star'"
-            :tippyCaption="'Save this as important'"
-            :classes="{
-              '[&>svg>path]:fill-yellow-400': note.starred,
-              '[&>svg>path]:fill-muted dark:[&>svg>path]:fill-body betterhover:group-hover:[&>svg>path]:fill-yellow-200':
-                !note.starred,
-            }"
-          />
-
-          <tippy
-            v-else
-            arrow
-            interactive
-            trigger="click"
-            theme="tomato"
-            ref="tippySubmit"
-          >
-            <template #default>
-              <SvgButton
-                :icon="'fa-solid fa-trash'"
-                :tippy-caption="'Delete'"
-                :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
-              />
-            </template>
-
-            <template #content="{ hide }">
-              <div class="p-1 text-center">
-                <span class="inline-block text-center mb-1">Delete?</span>
-                <div class="flex">
-                  <button
-                    @click="deleteNote"
-                    class="py-1 px-2 mx-1 bg-warning rounded"
-                  >
-                    YES
-                  </button>
-                  <button
-                    @click="hide()"
-                    class="py-1 px-2 mx-1 border-2 border-muted transition-colors betterhover:hover:bg-muted rounded"
-                  >
-                    NO
-                  </button>
-                </div>
-              </div>
-            </template>
-          </tippy>
-        </Transition>
-      </div>
-    </div>
+    <NoteItemEditMode
+      :editMode="editMode"
+      :note="note"
+      :editable="editable"
+      @setStar="setStar"
+      @editNote="editNote"
+      @closeEdit="closeEdit"
+      @deleteNote="deleteNote"
+    />
 
     <div class="mt-2">
       <transition mode="out-in" name="fade">
@@ -113,7 +36,9 @@
       </transition>
       <transition name="fade">
         <div v-if="note.time && !editMode" class="mt-2 text-sm text-gray-500">
-          <i>{{ `Task was ${edited ? "edited" : "added"} at ` + note.time }}</i>
+          <i>{{
+            `Task was ${note.edited ? "edited" : "added"} at ` + note.time
+          }}</i>
         </div>
       </transition>
     </div>
@@ -121,31 +46,24 @@
 </template>
 
 <script>
-import Badge from "../UI/Badge.vue";
-import Button from "../UI/Button.vue";
+import NoteItemEditMode from "./NoteItemEditMode.vue";
 import Input from "../UI/Input.vue";
-import { Tippy } from "vue-tippy";
 
-import PrioritySelect from "../UI/PrioritySelect.vue";
+import { Tippy } from "vue-tippy";
 
 import { mapActions } from "pinia";
 import { noteStore } from "@/store/notes.js";
-import SvgButton from "../UI/SvgButton.vue";
 
 export default {
   components: {
-    Badge,
-    Button,
     Tippy,
+    NoteItemEditMode,
     Input,
-    PrioritySelect,
-    SvgButton,
   },
 
   data() {
     return {
       editMode: false,
-      edited: false,
     };
   },
 
@@ -164,10 +82,18 @@ export default {
   },
 
   methods: {
-    ...mapActions(noteStore, ["deleteNoteAction", "editNoteAction"]),
+    ...mapActions(noteStore, [
+      "deleteNoteAction",
+      "updateLocalStorage",
+      "editNoteAction",
+    ]),
 
     handleClickOutside(event) {
-      if (this.$props.isOpen && !event.composedPath().includes(this.$el)) {
+      if (
+        this.$props.isOpen &&
+        this.$data.editMode &&
+        !event.composedPath().includes(this.$el)
+      ) {
         this.closeEdit();
       }
     },
@@ -184,20 +110,13 @@ export default {
 
     closeEdit() {
       this.$data.editMode = false;
-      (this.$props.note.time = new Date().toLocaleString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      })),
-        (this.edited = true);
-      this.editNoteAction();
+      this.$emit("sortAction");
+      this.editNoteAction(this.$props.note);
     },
 
     setStar() {
       this.$props.note.starred = !this.$props.note.starred;
-      this.editNoteAction();
+      this.updateLocalStorage();
     },
   },
 

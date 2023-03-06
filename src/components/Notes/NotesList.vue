@@ -8,6 +8,7 @@
         :isOpen="isOpen"
         @openEditNote="openEditNote"
         :editable="editable"
+        @sortAction="$emit('sortAction')"
       />
     </TransitionGroup>
   </ul>

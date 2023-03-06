@@ -49,7 +49,11 @@
       v-else
       class="py-4 h-[calc(100%-50px)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] pr-2"
     >
-      <NotesList :notes="computedNotes" :editable="true" />
+      <NotesList
+        :notes="computedNotes"
+        :editable="true"
+        @sortAction="sortNotes"
+      />
     </div>
     <AddNoteWrapper />
   </div>
@@ -91,7 +95,7 @@ export default {
     ...mapActions(noteStore, [
       "initStoreNotes",
       "toggleLayoutAction",
-      "editNoteAction",
+      "updateLocalStorage",
     ]),
 
     actionSort() {
@@ -101,7 +105,7 @@ export default {
       } else {
         this.unSortNotes();
       }
-      this.editNoteAction();
+      this.updateLocalStorage();
     },
 
     sortNotes() {

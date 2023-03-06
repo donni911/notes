@@ -5,6 +5,7 @@
     :class="classes"
     :placeholder="placeholder"
     :value="modelValue"
+    @keyup.enter="$emit('enterClick')"
     @input="$emit('update:modelValue', $event.target.value)"
   />
 </template>
