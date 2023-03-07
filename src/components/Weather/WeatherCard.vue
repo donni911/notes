@@ -7,7 +7,7 @@
         :key="computedImage"
         class="absolute top-0 right-0 w-[200px] h-[200px] flex-shrink-0 z-0"
       >
-        <img :src="'../../src/assets/' + computedImage" :alt="computedImage" />
+        <img :src="'/' + computedImage" :alt="computedImage" />
       </div>
     </transition>
     <div class="z-10">
