@@ -12,12 +12,15 @@
         >{{ item.name }}</router-link
       >
     </slot>
-    <counter v-if="item.count" :count="item.count" class="ml-auto z-10" />
+    <counter v-if="computedCount" :count="computedCount" class="ml-auto z-10" />
   </li>
 </template>
 
 <script>
 import Counter from "../Counter.vue";
+
+import { mapState } from "pinia";
+import { noteStore } from "@/store/notes.js";
 
 export default {
   components: {
@@ -29,11 +32,20 @@ export default {
     },
   },
 
-  methods: {
+  computed: {
+    ...mapState(noteStore, ["notesLength", "starNotesLength"]),
+
     computedCount() {
-      this.$props.item.count++;
+      switch (this.item.linkName) {
+        case "notes":
+          return this.notesLength;
+        case "starred":
+          return this.starNotesLength;
+      }
     },
   },
+
+  mounted() {},
 };
 </script>
 

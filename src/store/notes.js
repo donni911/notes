@@ -26,6 +26,14 @@ export const noteStore = defineStore("noteStore", {
     starNotes(state) {
       return state.notes.filter((note) => note.starred);
     },
+
+    starNotesLength(state) {
+      return state.notes.filter((note) => note.starred).length;
+    },
+
+    notesLength(state) {
+      return state.notes.length;
+    },
   },
 
   actions: {
@@ -81,7 +89,7 @@ export const noteStore = defineStore("noteStore", {
       });
 
       this.initCount("notes", this.notes.length);
-      
+
       this.updateLocalStorage();
     },
 

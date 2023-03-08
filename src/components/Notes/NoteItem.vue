@@ -82,7 +82,7 @@ export default {
   },
 
   computed: {
-    ...mapState(noteStore, ["starNotes"]),
+    ...mapState(noteStore, ["starNotes", "notes"]),
   },
 
   methods: {
@@ -90,7 +90,6 @@ export default {
       "deleteNoteAction",
       "updateLocalStorage",
       "editNoteAction",
-      "initCount",
     ]),
 
     handleClickOutside(event) {
@@ -122,7 +121,6 @@ export default {
     setStar() {
       this.$props.note.starred = !this.$props.note.starred;
 
-      this.initCount("starred", this.starNotes.length);
       this.updateLocalStorage();
     },
   },

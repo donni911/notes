@@ -43,13 +43,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(noteStore, ["initStoreNotes", "initCount"]),
+    ...mapActions(noteStore, ["initStoreNotes"]),
   },
 
   mounted() {
-    this.initCount("notes", this.notes.length);
-    this.initCount("starred", this.starNotes.length);
-
     console.log(this.notes.length);
   },
 
