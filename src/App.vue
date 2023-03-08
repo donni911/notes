@@ -28,38 +28,29 @@ export default {
   },
   provide() {
     return {
-      menuItems: this.$data.menuItems,
+      menuItems: this.menuItems,
     };
   },
 
   data() {
     return {
-      menuItems: [
-        {
-          linkName: "notes",
-          name: "Notes",
-          icon: "fa-solid fa-table-list",
-        },
-        {
-          linkName: "reminder",
-          name: "Reminders",
-          icon: "fa-solid fa-bell",
-        },
-        { linkName: "starred", name: "Starred", icon: "fa-solid fa-star" },
-        { linkName: "weather", name: "Weather", icon: "fa-solid fa-sun" },
-        { linkName: "map", name: "Map", icon: "fa-solid fa-map" },
-        { linkName: "chat", name: "Chat", icon: "fa-solid fa-comments" },
-      ],
       htmlElement: document.documentElement,
     };
   },
 
   computed: {
-    ...mapState(noteStore, ["notes"]),
+    ...mapState(noteStore, ["notes", "menuItems", "starNotes"]),
   },
 
   methods: {
-    ...mapActions(noteStore, ["initStoreNotes"]),
+    ...mapActions(noteStore, ["initStoreNotes", "initCount"]),
+  },
+
+  mounted() {
+    this.initCount("notes", this.notes.length);
+    this.initCount("starred", this.starNotes.length);
+
+    console.log(this.notes.length);
   },
 
   created() {

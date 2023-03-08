@@ -4,6 +4,22 @@ export const noteStore = defineStore("noteStore", {
   state: () => ({
     notes: [],
     rowLayout: null,
+    menuItems: [
+      {
+        linkName: "notes",
+        name: "Notes",
+        icon: "fa-solid fa-table-list",
+      },
+      {
+        linkName: "reminder",
+        name: "Reminders",
+        icon: "fa-solid fa-bell",
+      },
+      { linkName: "starred", name: "Starred", icon: "fa-solid fa-star" },
+      { linkName: "weather", name: "Weather", icon: "fa-solid fa-sun" },
+      { linkName: "map", name: "Map", icon: "fa-solid fa-map" },
+      { linkName: "chat", name: "Chat", icon: "fa-solid fa-comments" },
+    ],
   }),
 
   getters: {
@@ -13,6 +29,10 @@ export const noteStore = defineStore("noteStore", {
   },
 
   actions: {
+    initCount(id, count) {
+      this.menuItems.find((el) => el.linkName === id).count = count;
+    },
+
     updateLocalStorage() {
       localStorage.notes = JSON.stringify(this.notes);
       localStorage.noteLayout = JSON.stringify(this.rowLayout);
@@ -33,7 +53,6 @@ export const noteStore = defineStore("noteStore", {
     },
 
     editNoteAction(note) {
-      console.log(note);
       let findNote = this.notes.find((el) => el === note);
       findNote.time = new Date().toLocaleString("en-GB", {
         day: "numeric",
@@ -61,6 +80,8 @@ export const noteStore = defineStore("noteStore", {
         }),
       });
 
+      this.initCount("notes", this.notes.length);
+      
       this.updateLocalStorage();
     },
 

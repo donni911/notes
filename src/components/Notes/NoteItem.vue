@@ -51,7 +51,7 @@ import Input from "../UI/Input.vue";
 
 import { Tippy } from "vue-tippy";
 
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { noteStore } from "@/store/notes.js";
 
 export default {
@@ -81,11 +81,16 @@ export default {
     },
   },
 
+  computed: {
+    ...mapState(noteStore, ["starNotes"]),
+  },
+
   methods: {
     ...mapActions(noteStore, [
       "deleteNoteAction",
       "updateLocalStorage",
       "editNoteAction",
+      "initCount",
     ]),
 
     handleClickOutside(event) {
@@ -116,6 +121,8 @@ export default {
 
     setStar() {
       this.$props.note.starred = !this.$props.note.starred;
+
+      this.initCount("starred", this.starNotes.length);
       this.updateLocalStorage();
     },
   },
