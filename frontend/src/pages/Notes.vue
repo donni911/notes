@@ -2,6 +2,7 @@
   <div class="w-full h-full relative pb-2">
     <div class="flex items-center mb-4">
       <Input
+        v-if="computedNotes.length"
         v-model="searchNote"
         :placeholder="'Search note'"
         :classes="'shadow-md rounded-full px-4 py-3 w-[75%]'"
