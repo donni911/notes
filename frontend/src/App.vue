@@ -46,10 +46,6 @@ export default {
     ...mapActions(noteStore, ["initStoreNotes"]),
   },
 
-  mounted() {
-    console.log(this.notes.length);
-  },
-
   created() {
     //initStore
     this.initStoreNotes();

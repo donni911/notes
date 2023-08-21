@@ -109,7 +109,7 @@ export default {
 
     deleteNote() {
       this.deleteNoteAction(this.note);
-      this.$refs.tippySubmit.hide();
+      // this.$refs.tippySubmit.hide();
     },
 
     closeEdit() {

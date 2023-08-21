@@ -1,4 +1,10 @@
 import { defineStore } from "pinia";
+import {
+  getTasks,
+  addTask,
+  deleteTask,
+  updateTask,
+} from "../services/tasksApi";
 
 export const noteStore = defineStore("noteStore", {
   state: () => ({
@@ -46,39 +52,14 @@ export const noteStore = defineStore("noteStore", {
       localStorage.noteLayout = JSON.stringify(this.rowLayout);
     },
 
-    initStoreNotes() {
-      if (localStorage.notes) {
-        this.notes = JSON.parse(localStorage.notes);
-      } else {
-        this.notes = [];
-      }
-
-      if (localStorage.noteLayout) {
-        this.rowLayout = JSON.parse(localStorage.noteLayout);
-      } else {
-        this.rowLayout = false;
-      }
+    async initStoreNotes() {
+      this.notes = await getTasks();
     },
 
-    editNoteAction(note) {
-      let findNote = this.notes.find((el) => el === note);
-      findNote.time = new Date().toLocaleString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      });
-
-      findNote.edited = true;
-
-      this.updateLocalStorage();
-    },
-
-    addNoteAction(note) {
-      this.notes.unshift({
-        ...note,
-        starred: false,
+    async editNoteAction(note) {
+      const updatedTask = {
+        ...tasks,
+        edited: true,
         time: new Date().toLocaleString("en-GB", {
           day: "numeric",
           month: "long",
@@ -86,17 +67,35 @@ export const noteStore = defineStore("noteStore", {
           hour: "numeric",
           minute: "numeric",
         }),
-      });
+      };
 
-      this.initCount("notes", this.notes.length);
+      await updateTask(note._id, updatedTask);
 
-      this.updateLocalStorage();
+      // let findNote = this.notes.find((el) => el === note);
+      // findNote.time = new Date().toLocaleString("en-GB", {
+      //   day: "numeric",
+      //   month: "long",
+      //   year: "numeric",
+      //   hour: "numeric",
+      //   minute: "numeric",
+      // });
+
+      // findNote.edited = true;
+
+      // this.updateLocalStorage();
     },
 
-    deleteNoteAction(note) {
-      const noteToDelete = this.notes.map((el) => el).indexOf(note);
-      this.notes.splice(noteToDelete, 1);
-      this.updateLocalStorage();
+    async addNoteAction(note) {
+      const res = await addTask(note);
+      this.notes.push(res);
+    },
+
+    async deleteNoteAction(note) {
+      console.log(note._id);
+      await deleteTask(note._id);
+      // const noteToDelete = this.notes.map((el) => el).indexOf(note);
+      // this.notes.splice(noteToDelete, 1);
+      // this.updateLocalStorage();
     },
 
     updateNoteAction() {
