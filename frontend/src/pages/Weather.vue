@@ -86,7 +86,7 @@ export default {
     async weatherInfo() {
       await axiosWeatherClient
         .get(
-          `weather?q=${this.searchLocation}` +
+          `/weather?q=${this.searchLocation}` +
             `&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`
         )
         .then((response) => {
@@ -97,8 +97,6 @@ export default {
             this.processing = false;
             this.weather = response.data;
           }
-
-          console.log(response.data);
         })
 
         .catch((error) => {

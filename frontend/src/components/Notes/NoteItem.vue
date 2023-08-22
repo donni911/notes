@@ -34,6 +34,7 @@
           placeholder="Note Description"
         />
       </transition>
+
       <transition name="fade">
         <div v-if="note.time && !editMode" class="mt-2 text-sm text-gray-500">
           <i>{{
@@ -86,11 +87,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(noteStore, [
-      "deleteNoteAction",
-      "updateLocalStorage",
-      "editNoteAction",
-    ]),
+    ...mapActions(noteStore, ["deleteNoteAction", "editNoteAction"]),
 
     handleClickOutside(event) {
       if (
@@ -108,8 +105,8 @@ export default {
     },
 
     deleteNote() {
-      this.deleteNoteAction(this.note);
-      // this.$refs.tippySubmit.hide();
+      this.deleteNoteAction(this.$props.note);
+      this.$refs.tippySubmit.hide();
     },
 
     closeEdit() {
@@ -120,8 +117,7 @@ export default {
 
     setStar() {
       this.$props.note.starred = !this.$props.note.starred;
-
-      this.updateLocalStorage();
+      this.editNoteAction(this.$props.note);
     },
   },
 

@@ -11,7 +11,6 @@
         <button
           @click="$emit('closeNote')"
           class="[&>svg>path]:fill-text p-2 w-8 h-8 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full transition active:scale-90"
-          :class="[sizeComputed, bgComputed, fillComputed]"
         >
           <font-awesome-icon icon="fa-solid fa-close" />
         </button>

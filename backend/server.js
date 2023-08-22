@@ -7,7 +7,7 @@ import { default as taskRoutes } from "./routes/task-routes.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 4001;
-const URL = process.env.MONGO_URL || "mongodb://localhost:27017/tasksbase";
+const URL = process.env.MONGO_URL || "mongodb://localhost:27017/adventure-notes";
 
 const app = express();
 app.use(cors());

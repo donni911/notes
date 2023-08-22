@@ -1,37 +1,22 @@
-import axios from "axios";
-
-const urlTasks = "http://localhost:4000/tasks";
+import http from "./index.js";
 
 const getTasks = async () => {
-  const res = await axios.get(urlTasks);
+  const res = await http.get("/tasks");
   return res.data;
 };
 
 const addTask = async (task) => {
-  const updatedTask = {
-    ...task,
-    starred: false,
-    time: new Date().toLocaleString("en-GB", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-    }),
-  };
-
-  const res = await axios.post(urlTasks, updatedTask);
-
+  const res = await http.post("/tasks", task);
   return res.data;
 };
 
 const deleteTask = async (id) => {
-  const res = await axios.delete(urlTasks, id);
+  const res = await http.delete(`/tasks/${id}`);
   return res.data;
 };
 
 const updateTask = async (id, updatedTask) => {
-  const res = await axios.patch(urlTasks + `/${id}`, updatedTask);
+  const res = await http.patch(`/tasks/${id}`, updatedTask);
   return res.data;
 };
 

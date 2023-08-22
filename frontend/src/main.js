@@ -69,7 +69,6 @@ const pinia = createPinia();
 
 createApp(App)
   .use(pinia)
-  .use(createPinia())
   .use(router)
   .use(VueTippy, {
     defaultProps: {

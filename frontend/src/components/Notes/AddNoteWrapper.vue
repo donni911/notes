@@ -5,7 +5,6 @@
         v-if="!addNoteMode"
         @click="addNote"
         class="[&>svg>path]:fill-white bg-muted betterhover:hover::bg-secondary shadow-md rounded-full dark:bg-body-dark-side p-3 w-12 h-12 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full transition active:scale-90"
-        :class="[sizeComputed, bgComputed, fillComputed]"
       >
         <font-awesome-icon icon="fa-solid fa-plus" />
       </button>

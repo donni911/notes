@@ -6,6 +6,16 @@ import {
   updateTask,
 } from "../services/tasksApi";
 
+const newTime = () => {
+  return new Date().toLocaleString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  });
+};
+
 export const noteStore = defineStore("noteStore", {
   state: () => ({
     notes: [],
@@ -47,64 +57,46 @@ export const noteStore = defineStore("noteStore", {
       this.menuItems.find((el) => el.linkName === id).count = count;
     },
 
-    updateLocalStorage() {
-      localStorage.notes = JSON.stringify(this.notes);
-      localStorage.noteLayout = JSON.stringify(this.rowLayout);
-    },
-
+    // GET
     async initStoreNotes() {
       this.notes = await getTasks();
     },
-
+    // PATCH
     async editNoteAction(note) {
       const updatedTask = {
-        ...tasks,
-        edited: true,
-        time: new Date().toLocaleString("en-GB", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-        }),
+        ...note,
+        time: newTime(),
       };
 
       await updateTask(note._id, updatedTask);
-
-      // let findNote = this.notes.find((el) => el === note);
-      // findNote.time = new Date().toLocaleString("en-GB", {
-      //   day: "numeric",
-      //   month: "long",
-      //   year: "numeric",
-      //   hour: "numeric",
-      //   minute: "numeric",
-      // });
-
-      // findNote.edited = true;
-
-      // this.updateLocalStorage();
     },
-
+    //POST
     async addNoteAction(note) {
-      const res = await addTask(note);
+      const updatedTask = {
+        ...note,
+        starred: false,
+        time: newTime(),
+      };
+      const res = await addTask(updatedTask);
+
       this.notes.push(res);
     },
-
+    // DELETE
     async deleteNoteAction(note) {
-      console.log(note._id);
-      await deleteTask(note._id);
-      // const noteToDelete = this.notes.map((el) => el).indexOf(note);
-      // this.notes.splice(noteToDelete, 1);
-      // this.updateLocalStorage();
+      try {
+        const noteToDelete = this.notes.find((el) => el._id === note._id);
+
+        this.notes.splice(this.notes.indexOf(noteToDelete), 1);
+
+        await deleteTask(note._id);
+      } catch (err) {
+        console.error("Error deleting task:", err);
+      }
     },
 
-    updateNoteAction() {
-      this.updateLocalStorage();
-    },
-
+    // TOGGLE LAYOUT VISIBILITY
     toggleLayoutAction() {
       this.rowLayout = !this.rowLayout;
-      this.updateLocalStorage();
     },
   },
 });

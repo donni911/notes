@@ -1,16 +1,12 @@
 <template>
   <div class="w-full h-full relative pb-2">
-    <div class="flex items-center mb-4">
+    <div class="flex items-center mb-4" v-if="notes.length">
       <Input
-        v-if="computedNotes.length"
         v-model="searchNote"
         :placeholder="'Search note'"
         :classes="'shadow-md rounded-full px-4 py-3 w-[75%]'"
       />
-      <div
-        class="ml-2 gap-6 flex justify-center w-[25%]"
-        v-if="computedNotes.length"
-      >
+      <div class="ml-2 gap-6 flex justify-center w-[25%]">
         <button
           @click="toggleLayout"
           v-tippy="'Toggle layout'"
@@ -40,12 +36,11 @@
       </div>
     </div>
     <div
-      v-if="!notes.length"
+      v-if="!computedNotes.length"
       class="flex my-auto justify-center absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
     >
       <h4 class="text-muted">EMPTY LIST</h4>
     </div>
-
     <div
       v-else
       class="py-4 h-[calc(100%-50px)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] pr-2"
@@ -93,11 +88,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(noteStore, [
-      "initStoreNotes",
-      "toggleLayoutAction",
-      "updateLocalStorage",
-    ]),
+    ...mapActions(noteStore, ["toggleLayoutAction", "updateLocalStorage"]),
 
     actionSort() {
       this.isSorted = !this.isSorted;
