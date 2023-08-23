@@ -12,6 +12,9 @@ const routes = [
     path: "/",
     name: "notes",
     component: Notes,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/reminder",
@@ -42,6 +45,16 @@ const routes = [
     path: "/chat",
     name: "chat",
     component: Chat,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: () => import("../pages/auth/RegisterPage.vue"),
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../pages/auth/LoginPage.vue"),
   },
 ];
 

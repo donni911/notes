@@ -6,13 +6,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#9AE6B4",
+        body: "#8c8d6f",
+        "body-inner": "#CED097",
+        primary: "#102542",
         secondary: "#2E382E",
-        accent: "#C6F6D5",
-        body: "#A0AEC0",
-        article: "#ffebb2",
-        muted: "#CBD5E0",
-        "body-inner": "#EDF2F7",
+        accent: "#ced0977a",
+        article: '#8c8d6f',
+        muted: "#737373",
         "text-color": "#1A202C",
 
         "body-dark": "#2E4F4F",

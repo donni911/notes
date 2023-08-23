@@ -8,7 +8,7 @@
       />
       <div class="ml-2 gap-6 flex justify-center w-[25%]">
         <button
-          @click="toggleLayout"
+          @click="toggleLayoutAction"
           v-tippy="'Toggle layout'"
           class="p-2 -m-2 active:scale-90 group -md:hidden"
         >
@@ -88,10 +88,15 @@ export default {
   },
 
   methods: {
-    ...mapActions(noteStore, ["toggleLayoutAction", "updateLocalStorage"]),
+    ...mapActions(noteStore, [
+      "toggleLayoutAction",
+      "updateLocalStorage",
+      "initVisibilityNotes",
+    ]),
 
     actionSort() {
       this.isSorted = !this.isSorted;
+
       if (this.isSorted) {
         this.sortNotes();
       } else {
@@ -119,10 +124,10 @@ export default {
         return 0;
       });
     },
+  },
 
-    toggleLayout() {
-      this.toggleLayoutAction();
-    },
+  mounted() {
+    this.initVisibilityNotes();
   },
 };
 </script>

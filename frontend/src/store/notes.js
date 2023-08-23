@@ -19,7 +19,7 @@ const newTime = () => {
 export const noteStore = defineStore("noteStore", {
   state: () => ({
     notes: [],
-    rowLayout: null,
+    rowLayout: false,
     menuItems: [
       {
         linkName: "notes",
@@ -53,6 +53,16 @@ export const noteStore = defineStore("noteStore", {
   },
 
   actions: {
+    initVisibilityNotes() {
+      this.rowLayout = JSON.parse(localStorage.getItem("noteLayout")) || false;
+    },
+
+    // TOGGLE LAYOUT VISIBILITY
+    toggleLayoutAction() {
+      this.rowLayout = !this.rowLayout;
+      localStorage.noteLayout = JSON.stringify(this.rowLayout);
+    },
+
     initCount(id, count) {
       this.menuItems.find((el) => el.linkName === id).count = count;
     },
@@ -92,11 +102,6 @@ export const noteStore = defineStore("noteStore", {
       } catch (err) {
         console.error("Error deleting task:", err);
       }
-    },
-
-    // TOGGLE LAYOUT VISIBILITY
-    toggleLayoutAction() {
-      this.rowLayout = !this.rowLayout;
     },
   },
 });

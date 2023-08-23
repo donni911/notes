@@ -20,12 +20,12 @@
       <Input
         v-model="title"
         @submit.prevent
-        :classes="'p-1 body-inner w-full border-2 border-body-inner mb-2 rounded'"
+        :classes="'p-1 body-inner w-full border-2 border-transparent mb-2 rounded'"
         :placeholder="'Note Title'"
       />
       <textarea
         v-model="description"
-        class="mb-2 focus:outline-0 p-1 min-h-[35px] h-[250px] max-h-[250px] w-full body-inner border-2 border-body-inner dark:bg-dark-input rounded"
+        class="mb-2 focus:outline-0 p-1 min-h-[35px] h-[250px] max-h-[250px] w-full body-inner border-2 border-transparent dark:bg-dark-input rounded"
         placeholder="Note Description"
       />
     </div>

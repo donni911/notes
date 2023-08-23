@@ -1,5 +1,5 @@
 <template>
-  <li class="relative p-3 flex items-center">
+  <li class="relative p-3 flex items-center min-h-[50px]">
     <div
       class="w-4 h-4 transition-colors dark:[&>svg>path]:fill-dark-text [&>svg]:h-full [&>svg]:w-full flex z-10"
     >

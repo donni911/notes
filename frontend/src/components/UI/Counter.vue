@@ -1,6 +1,6 @@
 <template>
   <div
-    class="overflow-hidden shrink-0 py-1 px-3 leading-4 bg-body-inner rounded-xl"
+    class="overflow-hidden pointer-events-none shrink-0 py-1 px-3 leading-4 bg-accent rounded-xl"
   >
     <transition mode="out-in">
       <span :key="computedCounter" class="block"> {{ computedCounter }}</span>

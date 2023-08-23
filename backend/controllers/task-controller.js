@@ -1,8 +1,5 @@
 import Task from "../models/Task.js";
-
-const handleError = (res, err) => {
-  res.status(500).json(err);
-};
+import { handleError } from "./helpers.js";
 
 const getTasks = (req, res) => {
   Task.find()

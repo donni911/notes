@@ -6,6 +6,8 @@
       <h3 class="mr-4 text-lg">Dark mode</h3>
       <Switcher @clickEvent="toggleTheme" v-model="userThemeIsDark" />
     </div>
+
+    <button @click="logUserOut">Log Out</button>
   </div>
 </template>
 
@@ -28,6 +30,10 @@ export default {
 
   methods: {
     ...mapActions(userSettingsStore, ["toggleTheme", "initUserSettings"]),
+    logUserOut() {
+      localStorage.removeItem("jwt");
+      this.$router.push("/login");
+    },
   },
 
   computed: {
