@@ -107,6 +107,9 @@
 import Input from "../../components/UI/Input.vue";
 import { createUser } from "../../services/userApi.js";
 
+import { mapActions } from "pinia";
+import { userSettingsStore } from "../../store/userSettings.js";
+
 export default {
   data() {
     return {
@@ -134,6 +137,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(userSettingsStore, ["setUser", "getUserDetails"]),
+
     async handleRegisterUser() {
       this.isLoading = true;
 
@@ -142,10 +147,9 @@ export default {
         let token = response.data.token;
 
         if (token) {
-          localStorage.setItem("jwt", token);
+          this.setUser(token);
           this.$router.push("/");
-        } else {
-          this.errorMessages = "Try again later :(";
+          this.getUserDetails();
         }
       } catch (err) {
         this.errorMessages = err.response.data.errors;

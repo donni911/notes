@@ -7,7 +7,12 @@
       <Switcher @clickEvent="toggleTheme" v-model="userThemeIsDark" />
     </div>
 
-    <button @click="logUserOut">Log Out</button>
+    <button
+      class="px-4 py-2 rounded-full text-white bg-primary mt-2"
+      @click="logOut"
+    >
+      Log Out
+    </button>
   </div>
 </template>
 
@@ -29,9 +34,14 @@ export default {
   },
 
   methods: {
-    ...mapActions(userSettingsStore, ["toggleTheme", "initUserSettings"]),
-    logUserOut() {
-      localStorage.removeItem("jwt");
+    ...mapActions(userSettingsStore, [
+      "toggleTheme",
+      "initUserSettings",
+      "logUserOut",
+    ]),
+
+    logOut() {
+      this.logUserOut();
       this.$router.push("/login");
     },
   },

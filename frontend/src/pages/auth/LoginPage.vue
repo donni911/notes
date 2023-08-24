@@ -83,7 +83,7 @@
       <p>
         Already have an account?
         <router-link class="text-primary" to="/register"
-          >Click to login</router-link
+          >Click to register</router-link
         >
       </p>
     </form>
@@ -93,6 +93,9 @@
 <script>
 import Input from "../../components/UI/Input.vue";
 import { loginUser } from "../../services/userApi.js";
+
+import { mapActions } from "pinia";
+import { userSettingsStore } from "../../store/userSettings.js";
 
 export default {
   data() {
@@ -119,6 +122,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(userSettingsStore, ["setUser", "getUserDetails"]),
+
     async handleLoginUser() {
       this.isLoading = true;
 
@@ -127,12 +132,12 @@ export default {
         let token = response.data.token;
 
         if (token) {
-          localStorage.setItem("jwt", token);
+          this.setUser(token);
           this.$router.push("/");
+          this.getUserDetails();
         }
       } catch (err) {
         this.errorMessages = err.response.data.errors;
-        console.log(this.errorMessages);
       } finally {
         this.isLoading = false;
       }

@@ -4,10 +4,12 @@
       class="bg-body-inner transition-colors dark:bg-body-dark max-w-[1030px] w-full h-full md:h-[765px] rounded overflow-hidden"
     >
       <section class="flex h-full relative">
-        <sidebar :menu-items="menuItems" v-if="user" />
+        <transition name="fade" mode="out-in">
+          <sidebar :menu-items="menuItems" v-if="user" />
+        </transition>
         <section class="w-full p-2 md:p-4 relative">
           <router-view v-slot="{ Component }">
-            <transition name="fade">
+            <transition name="fade" mode="out-in">
               <component :is="Component" />
             </transition>
           </router-view>
@@ -17,10 +19,9 @@
   </div>
 </template>
 <script>
-import VueJwtDecode from "vue-jwt-decode";
-
 import Sidebar from "./components/Sidebar.vue";
 import { mapActions, mapState } from "pinia";
+import { userSettingsStore } from "./store/userSettings.js";
 import { noteStore } from "./store/notes.js";
 
 export default {
@@ -30,7 +31,6 @@ export default {
   provide() {
     return {
       menuItems: this.menuItems,
-      user: null,
     };
   },
 
@@ -42,26 +42,23 @@ export default {
 
   computed: {
     ...mapState(noteStore, ["notes", "menuItems", "starNotes"]),
+    ...mapState(userSettingsStore, ["user"]),
   },
 
   methods: {
     ...mapActions(noteStore, ["initStoreNotes"]),
+    ...mapActions(userSettingsStore, ["getUserDetails"]),
+  },
 
-    getUserDetails() {
-      let token = localStorage.getItem("jwt");
-      if (token) {
-        let decoded = VueJwtDecode.decode(token);
-        this.user = decoded;
-      }
-    },
+  mounted() {
+    //init User
+    this.getUserDetails();
+    console.log(this.user);
   },
 
   created() {
     //init Store
     this.initStoreNotes();
-
-    //init User
-    this.getUserDetails();
 
     //init theme
     if (localStorage.darkTheme && JSON.parse(localStorage.darkTheme) == true) {
