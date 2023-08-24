@@ -22,7 +22,6 @@ import VueJwtDecode from "vue-jwt-decode";
 import Sidebar from "./components/Sidebar.vue";
 import { mapActions, mapState } from "pinia";
 import { noteStore } from "./store/notes.js";
-// import { user } from "./services/userApi.js";
 
 export default {
   components: {

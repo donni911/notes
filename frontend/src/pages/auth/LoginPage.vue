@@ -129,11 +129,10 @@ export default {
         if (token) {
           localStorage.setItem("jwt", token);
           this.$router.push("/");
-        } else {
-          this.errorMessages = "Try again later :(";
         }
       } catch (err) {
         this.errorMessages = err.response.data.errors;
+        console.log(this.errorMessages);
       } finally {
         this.isLoading = false;
       }
