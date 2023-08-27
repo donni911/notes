@@ -6,6 +6,8 @@ import {
   updateTask,
 } from "../services/tasksApi";
 
+import { setAuthToken } from "../services/http.js";
+
 const newTime = () => {
   return new Date().toLocaleString("en-GB", {
     day: "numeric",
@@ -19,6 +21,7 @@ const newTime = () => {
 export const noteStore = defineStore("noteStore", {
   state: () => ({
     notes: [],
+    isLoading: false,
     rowLayout: false,
     menuItems: [
       {
@@ -69,7 +72,15 @@ export const noteStore = defineStore("noteStore", {
 
     // GET
     async initStoreNotes() {
-      this.notes = await getTasks();
+      if (this.notes.length) {
+        this.isLoading = false;
+        return;
+      } else {
+        this.isLoading = true;
+        setAuthToken(localStorage.getItem("jwt"));
+        this.notes = await getTasks();
+        this.isLoading = false;
+      }
     },
     // PATCH
     async editNoteAction(note) {

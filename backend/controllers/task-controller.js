@@ -2,7 +2,10 @@ import Task from "../models/Task.js";
 import { handleError } from "./helpers.js";
 
 const getTasks = (req, res) => {
-  Task.find()
+  const userId = req.userData._id;
+  console.log(userId);
+  
+  Task.find({ user: userId })
     .sort({ time: -1 })
     .then((tasks) => {
       if (!tasks) {

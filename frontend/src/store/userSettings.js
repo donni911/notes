@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import VueJwtDecode from "vue-jwt-decode";
+import { setAuthToken, unsetAuthToken } from "../services/http.js";
 
 const userSettingsStore = defineStore("userSettingsStore", {
   state: () => ({
@@ -18,9 +19,12 @@ const userSettingsStore = defineStore("userSettingsStore", {
 
     setUser(token) {
       localStorage.setItem("jwt", token);
+      setAuthToken(token);
+      this.getUserDetails();
     },
 
     logUserOut() {
+      unsetAuthToken();
       localStorage.removeItem("jwt");
       this.user = null;
     },

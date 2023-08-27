@@ -25,7 +25,7 @@ const registerNewUser = async (req, res) => {
 
     let data = await user.save();
     const token = await user.generateAuthToken();
-
+    console.log(token);
     res.status(201).json({ data, token });
   } catch (err) {
     return handleError(res, err, 422);

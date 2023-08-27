@@ -47,8 +47,9 @@ import ActionButton from "../UI/ActionButton.vue";
 import Input from "../UI/Input.vue";
 import PrioritySelect from "../UI/PrioritySelect.vue";
 
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { noteStore } from "@/store/notes.js";
+import { userSettingsStore } from "../../store/userSettings";
 
 export default {
   components: {
@@ -70,6 +71,10 @@ export default {
       priorityValue: null,
       isFilled: true,
     };
+  },
+
+  computed: {
+    ...mapState(userSettingsStore, ["user"]),
   },
 
   methods: {
@@ -96,6 +101,7 @@ export default {
           title: this.title,
           description: this.description,
           importanceLevel: this.priorityValue,
+          user: this.user._id,
         });
 
         this.cleanValues();
@@ -106,6 +112,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.user);
     document.addEventListener("click", this.handleClickOutside);
   },
 

@@ -53,13 +53,9 @@ export default {
   mounted() {
     //init User
     this.getUserDetails();
-    console.log(this.user);
   },
 
   created() {
-    //init Store
-    this.initStoreNotes();
-
     //init theme
     if (localStorage.darkTheme && JSON.parse(localStorage.darkTheme) == true) {
       this.$data.htmlElement.classList.add("dark");

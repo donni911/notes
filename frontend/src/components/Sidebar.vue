@@ -3,9 +3,9 @@
     <SvgButton
       @click="openSidebar"
       :icon="'fa-solid fa-bars'"
-      class="md:hidden absolute z-30 bg-side top-[25%] shadow right-2 dark:bg-body-dark-side bg-white rounded-tl-md rounded-bl-md transition-transform"
+      class="md:hidden absolute z-30 bg-side top-[25%] shadow-[0px_0px_5px_#102542] right-2 dark:bg-body-dark-side bg-white rounded-tl-md rounded-bl-md transition-transform"
       :class="{ 'translate-x-full ': openedSidebar }"
-      :classes="'w-6 h-6 dark:[&>svg>path]:fill-white '"
+      :classes="'w-6 h-6 [&>svg>path]:fill-primary dark:[&>svg>path]:fill-white'"
     />
 
     <section

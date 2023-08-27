@@ -1,11 +1,10 @@
-import http from "./index.js";
+import http from "./http.js";
 
 export let user;
 
 const createUser = async (registerData) => {
   const res = await http.post("/register", registerData);
   user = res.data;
-  console.log(user);
   return res;
 };
 

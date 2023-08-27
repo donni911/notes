@@ -9,4 +9,11 @@ const http = axios.create({
   },
 });
 
+export const setAuthToken = (token) => {
+  http.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+export const unsetAuthToken = () => {
+  http.defaults.headers.common.Authorization = null;
+};
+
 export default http;

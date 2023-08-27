@@ -1,4 +1,4 @@
-import http from "./index.js";
+import http from "./http.js";
 
 const getTasks = async () => {
   const res = await http.get("/tasks");
