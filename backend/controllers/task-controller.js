@@ -3,30 +3,30 @@ import { handleError } from "./helpers.js";
 
 const getTasks = (req, res) => {
   const userId = req.userData._id;
-  console.log(userId);
-  
-  Task.find({ user: userId })
-    .sort({ time: -1 })
-    .then((tasks) => {
-      if (!tasks) {
-        res.status(404).json({ error: "Tasks was not found." });
-      }
-      res.status(200).json(tasks);
-    })
-    .catch((err) => handleError(res, { ...err, error: "Internal server" }));
-};
+  const searchQuery = req.query.q;
 
-// const getTasksByParams = (req, res) => {
-//   Task.find({
-//     $text: {
-//       $description: searchQuery,
-//     },
-//   })
-//     .then((task) => {
-//       res.status(200).json(task);
-//     })
-//     .catch((err) => handleError(res, err));
-// };
+  if (searchQuery) {
+    Task.find({
+      $text: {
+        $search: searchQuery,
+      },
+    })
+      .then((task) => {
+        res.status(200).json(task);
+      })
+      .catch((err) => handleError(res, err));
+  } else {
+    Task.find({ user: userId })
+      .sort({ time: -1 })
+      .then((tasks) => {
+        if (!tasks) {
+          res.status(404).json({ error: "Tasks was not found." });
+        }
+        res.status(200).json(tasks);
+      })
+      .catch((err) => handleError(res, { ...err, error: "Internal server" }));
+  }
+};
 
 const addTask = (req, res) => {
   const task = new Task(req.body);

@@ -88,6 +88,7 @@ export default {
       isPasswordVisible: false,
     };
   },
+
   computed: {
     isFormIncomplete() {
       return (
@@ -124,6 +125,7 @@ export default {
       this.isPasswordVisible = !this.isPasswordVisible;
     },
   },
+
   components: {
     Input,
     LoadingButton,

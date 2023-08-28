@@ -6,17 +6,9 @@ import {
   updateTask,
 } from "../services/tasksApi";
 
-import { setAuthToken } from "../services/http.js";
+import debounce from "../modules/helpers/debounce.js";
 
-const newTime = () => {
-  return new Date().toLocaleString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-  });
-};
+import { setAuthToken } from "../services/http.js";
 
 export const noteStore = defineStore("noteStore", {
   state: () => ({
@@ -82,21 +74,20 @@ export const noteStore = defineStore("noteStore", {
         this.isLoading = false;
       }
     },
+    //GET BY TEXT
+    getByText: debounce(async function (query) {
+      this.notes = await getTasks(query);
+    }, 300),
     // PATCH
     async editNoteAction(note) {
-      const updatedTask = {
-        ...note,
-        time: newTime(),
-      };
-
-      await updateTask(note._id, updatedTask);
+      const newNote = await updateTask(note._id, note);
+      return newNote;
     },
     //POST
     async addNoteAction(note) {
       const updatedTask = {
         ...note,
         starred: false,
-        time: newTime(),
       };
       const res = await addTask(updatedTask);
 

@@ -1,54 +1,65 @@
 <template>
   <li
-    class="rounded bg-white dark:bg-dark-text transition-colors shadow-md p-4"
+    class="rounded h-fit bg-white dark:bg-dark-text transition-colors shadow-md p-4"
   >
-    <NoteItemEditMode
-      :editMode="editMode"
-      :note="note"
-      :editable="editable"
-      @setStar="setStar"
-      @editNote="editNote"
-      @closeEdit="closeEdit"
-      @deleteNote="deleteNote"
-    />
+    <transition mode="out-in" name="fade">
+      <div v-if="!editMode">
+        <div class="flex justify-between items-center">
+          <Badge :type="note.importanceLevel" />
+          <div
+            class="grid gap-4 grid-cols-2 items-baseline flex-shrink-0"
+            v-if="editable"
+          >
+            <SvgButton
+              @clickEvent="editNote"
+              :tippyCaption="'Edit'"
+              :icon="'fa-solid fa-pen'"
+              :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
+            />
 
-    <div class="mt-2">
-      <transition mode="out-in" name="fade">
-        <Input
-          v-if="editMode"
-          :classes="'p-1 body-inner border-2 border-body-inner mb-2 rounded w-full'"
-          :placeholder="'Note Title'"
-          v-model="note.title"
-        />
-        <h3 v-else class="text-lg font-bold mb-1">
-          {{ note.title }}
-        </h3>
-      </transition>
-
-      <transition mode="out-in" name="fade">
-        <p v-if="!editMode">{{ note.description }}</p>
-        <textarea
-          v-else
-          v-model="note.description"
-          class="mb-2 focus:outline-0 p-1 min-h-[35px] h-[150px] max-h-[250px] w-full body-inner border-2 border-body-inner rounded"
-          placeholder="Note Description"
-        />
-      </transition>
-
-      <transition name="fade">
-        <div v-if="note.time && !editMode" class="mt-2 text-sm text-gray-500">
-          <i>{{
-            `Task was ${note.edited ? "edited" : "added"} at ` + note.time
-          }}</i>
+            <SvgButton
+              @clickEvent="setStar"
+              :icon="'fa-solid fa-star'"
+              :tippyCaption="'Save this as important'"
+              :classes="{
+                '[&>svg>path]:fill-yellow-400 betterhover:group-hover:[&>svg>path]:fill-yellow-400':
+                  note.starred,
+                '[&>svg>path]:fill-muted dark:[&>svg>path]:fill-body betterhover:group-hover:[&>svg>path]:fill-yellow-200':
+                  !note.starred,
+              }"
+            />
+          </div>
         </div>
-      </transition>
-    </div>
+
+        <div class="mt-2">
+          <h3 class="text-lg font-bold mb-1">
+            {{ note.title }}
+          </h3>
+
+          <p>{{ note.description }}</p>
+
+          <div class="mt-2 text-sm text-gray-500">
+            {{ date }}
+          </div>
+        </div>
+      </div>
+
+      <NoteItemEditMode
+        v-else
+        :note="note"
+        @setStar="setStar"
+        @editNote="editNote"
+        @closeEdit="closeEdit"
+        @deleteNote="deleteNote"
+      />
+    </transition>
   </li>
 </template>
 
 <script>
 import NoteItemEditMode from "./NoteItemEditMode.vue";
-import Input from "../UI/Input.vue";
+import Badge from "../UI/Badge.vue";
+import SvgButton from "../UI/SvgButton.vue";
 
 import { Tippy } from "vue-tippy";
 
@@ -59,12 +70,16 @@ export default {
   components: {
     Tippy,
     NoteItemEditMode,
-    Input,
+    SvgButton,
+    Badge,
   },
+
+  inject: ["editable"],
 
   data() {
     return {
       editMode: false,
+      date: null,
     };
   },
 
@@ -76,10 +91,6 @@ export default {
     isOpen: {
       type: Boolean,
     },
-
-    editable: {
-      type: Boolean,
-    },
   },
 
   computed: {
@@ -88,6 +99,22 @@ export default {
 
   methods: {
     ...mapActions(noteStore, ["deleteNoteAction", "editNoteAction"]),
+
+    updatedDate(date) {
+      const localeDate = new Date(date).toLocaleString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      });
+
+      if (this.note.createdAt === date) {
+        this.date = `Task was added at ` + localeDate;
+      } else {
+        this.date = `Task was edited at ` + localeDate;
+      }
+    },
 
     handleClickOutside(event) {
       if (
@@ -109,19 +136,25 @@ export default {
       this.$refs.tippySubmit?.hide();
     },
 
+    async editNoteDate() {
+      const date = await this.editNoteAction(this.$props.note);
+      this.updatedDate(date.updatedAt);
+    },
+
     closeEdit() {
       this.$data.editMode = false;
       this.$emit("sortAction");
-      this.editNoteAction(this.$props.note);
+      this.editNoteDate();
     },
 
     setStar() {
       this.$props.note.starred = !this.$props.note.starred;
-      this.editNoteAction(this.$props.note);
+      this.editNoteDate();
     },
   },
 
   mounted() {
+    this.updatedDate(this.note.updatedAt);
     document.addEventListener("click", this.handleClickOutside);
   },
 

@@ -7,7 +7,7 @@
       <h4 class="text-muted">No star notes</h4>
     </div>
     <div v-else class="py-4 h-full overflow-y-auto">
-      <NotesList :notes="starNotes" :editable="false" />
+      <NotesList :notes="starNotes" />
     </div>
   </div>
 </template>
@@ -15,11 +15,21 @@
 <script>
 import NotesList from "../components/Notes/NotesList.vue";
 
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { noteStore } from "../store/notes.js";
 
 export default {
   components: { NotesList },
+
+  provide() {
+    return {
+      editable: false,
+    };
+  },
+
+  methods: {
+    ...mapActions(noteStore, ["initStoreNotes"]),
+  },
 
   computed: { ...mapState(noteStore, ["starNotes"]) },
 };

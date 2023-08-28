@@ -1,9 +1,20 @@
 import http from "./http.js";
 
-const getTasks = async () => {
-  const res = await http.get("/tasks");
+const getTasks = async (query) => {
+  let res;
+  
+  if (!query) {
+    res = await http.get("/tasks");
+  } else {
+    res = await http.get("/tasks", {
+      params: {
+        q: query,
+      },
+    });
+  }
   return res.data;
 };
+
 
 const addTask = async (task) => {
   const res = await http.post("/tasks", task);

@@ -1,54 +1,21 @@
 <template>
-  <div class="flex justify-between items-center">
-    <transition mode="out-in" name="fade">
-      <Badge v-if="!editMode" :type="note.importanceLevel" />
+  <div>
+    <div class="flex justify-between items-center">
       <priority-select
-        v-else
         v-model="note.importanceLevel"
         class="mr-8"
         :placeholder="'Select priority'"
       />
-    </transition>
 
-    <div
-      class="grid gap-4 items-baseline flex-shrink-0"
-      :class="{ 'grid-cols-2 ': editable }"
-    >
-      <div v-if="editable">
-        <Transition mode="out-in" name="fade">
-          <SvgButton
-            v-if="!editMode"
-            @clickEvent="$emit('editNote')"
-            :tippyCaption="'Edit'"
-            :icon="'fa-solid fa-pen'"
-            :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
-          />
-          <SvgButton
-            v-else
-            @clickEvent="$emit('closeEdit')"
-            :tippyCaption="'Save'"
-            :icon="'fa-solid fa-check'"
-            :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
-          />
-        </Transition>
-      </div>
-
-      <Transition mode="out-in" name="fade">
+      <div class="grid gap-4 grid-cols-2 items-baseline flex-shrink-0">
         <SvgButton
-          v-if="!editMode"
-          @clickEvent="$emit('setStar')"
-          :icon="'fa-solid fa-star'"
-          :tippyCaption="'Save this as important'"
-          :classes="{
-            '[&>svg>path]:fill-yellow-400 betterhover:group-hover:[&>svg>path]:fill-yellow-400':
-              note.starred,
-            '[&>svg>path]:fill-muted dark:[&>svg>path]:fill-body betterhover:group-hover:[&>svg>path]:fill-yellow-200':
-              !note.starred,
-          }"
+          @clickEvent="$emit('closeEdit')"
+          :tippyCaption="'Save'"
+          :icon="'fa-solid fa-check'"
+          :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
         />
 
         <tippy
-          v-else
           arrow
           interactive
           trigger="click"
@@ -83,25 +50,36 @@
             </div>
           </template>
         </tippy>
-      </Transition>
+      </div>
+    </div>
+    <div class="mt-2">
+      <Input
+        :classes="'p-1 body-inner border-2 border-body-inner mb-2 rounded w-full'"
+        :placeholder="'Note Title'"
+        v-model="note.title"
+      />
+
+      <textarea
+        v-model="note.description"
+        class="mb-2 focus:outline-0 p-1 min-h-[35px] h-[150px] max-h-[250px] w-full body-inner border-2 border-body-inner rounded"
+        placeholder="Note Description"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import Badge from "../UI/Badge.vue";
 import SvgButton from "../UI/SvgButton.vue";
 import Input from "../UI/Input.vue";
 import PrioritySelect from "../UI/PrioritySelect.vue";
 
 export default {
   components: {
-    Badge,
     Input,
-    PrioritySelect,
     SvgButton,
+    PrioritySelect,
   },
 
-  props: ["editable", "note", "editMode"],
+  props: ["note"],
 };
 </script>

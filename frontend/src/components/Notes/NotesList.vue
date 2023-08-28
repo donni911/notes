@@ -7,7 +7,6 @@
         :key="note"
         :isOpen="isOpen"
         @openEditNote="openEditNote"
-        :editable="editable"
         @sortAction="$emit('sortAction')"
       />
     </TransitionGroup>
@@ -24,13 +23,10 @@ export default {
   components: {
     NoteItem,
   },
+
   props: {
     notes: {
       type: Array,
-    },
-
-    editable: {
-      type: Boolean,
     },
   },
 

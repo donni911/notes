@@ -4,7 +4,7 @@
       <Input
         v-model="searchLocation"
         @enterClick="weatherInfo"
-        :placeholder="'Look for a weather'"
+        :placeholder="'Look for a weather in...'"
         :classes="'shadow-md rounded-full px-4 py-3 pr-10 w-full'"
       />
       <SvgButton
@@ -75,7 +75,7 @@ export default {
 
   data() {
     return {
-      searchLocation: "London",
+      searchLocation: "",
       weather: null,
       processing: false,
       error: false,

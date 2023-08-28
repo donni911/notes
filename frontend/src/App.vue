@@ -53,6 +53,11 @@ export default {
   mounted() {
     //init User
     this.getUserDetails();
+
+    //init Store
+    if (this.user) {
+      this.initStoreNotes();
+    }
   },
 
   created() {

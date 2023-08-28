@@ -1,12 +1,13 @@
 <template>
   <div class="w-full h-full relative pb-2">
     <transition mode="out-in" name="fade">
-      <div v-if="!isLoading || notes.length">
+      <div v-if="!isLoading || notes.length" class="h-full">
         <div class="flex items-center mb-4">
-          <Input
+          <input
             v-model="searchNote"
-            :placeholder="'Search note'"
-            :classes="'shadow-md rounded-full px-4 py-3 w-[75%]'"
+            placeholder="Search note by text or description"
+            class="dark:bg-dark-input transition-colors shadow-md rounded-full px-4 py-3 w-[75%]"
+            @input="getByText(searchNote)"
           />
           <div class="ml-2 gap-6 flex justify-center w-[25%]">
             <button
@@ -38,7 +39,7 @@
           </div>
         </div>
         <div
-          v-if="!computedNotes.length"
+          v-if="!notes.length"
           class="flex my-auto justify-center absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
         >
           <h4 class="text-muted">EMPTY LIST</h4>
@@ -47,11 +48,7 @@
           v-else
           class="py-4 h-[calc(100%-50px)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] pr-2"
         >
-          <NotesList
-            :notes="computedNotes"
-            :editable="true"
-            @sortAction="sortNotes"
-          />
+          <NotesList :notes="notes" @sortAction="sortNotes" />
         </div>
       </div>
       <div v-else="isLoading" class="h-full">
@@ -81,6 +78,11 @@ import { noteStore } from "../store/notes.js";
 
 export default {
   components: { Input, AddNoteWrapper, NotesList, SvgButton, Spinner },
+  provide() {
+    return {
+      editable: true,
+    };
+  },
 
   data() {
     return {
@@ -91,23 +93,14 @@ export default {
 
   computed: {
     ...mapState(noteStore, ["notes", "isLoading", "starNotes", "rowLayout"]),
-
-    computedNotes() {
-      if (!this.searchNote) {
-        return this.notes;
-      }
-      return this.notes.filter((note) =>
-        note.title.toLowerCase().includes(this.searchNote.toLowerCase())
-      );
-    },
   },
 
   methods: {
     ...mapActions(noteStore, [
       "toggleLayoutAction",
-      "updateLocalStorage",
       "initVisibilityNotes",
       "initStoreNotes",
+      "getByText",
     ]),
 
     actionSort() {
@@ -118,7 +111,6 @@ export default {
       } else {
         this.unSortNotes();
       }
-      this.updateLocalStorage();
     },
 
     sortNotes() {
@@ -144,8 +136,6 @@ export default {
 
   mounted() {
     this.initVisibilityNotes();
-    //init Store
-    this.initStoreNotes();
   },
 };
 </script>
