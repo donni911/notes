@@ -112,7 +112,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.user);
     document.addEventListener("click", this.handleClickOutside);
   },
 
