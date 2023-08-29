@@ -48,6 +48,10 @@ export const noteStore = defineStore("noteStore", {
   },
 
   actions: {
+    deleteAllInfo() {
+      this.notes = [];
+      (this.isLoading = false), (this.rowLayout = false);
+    },
     initVisibilityNotes() {
       this.rowLayout = JSON.parse(localStorage.getItem("noteLayout")) || false;
     },
@@ -68,8 +72,11 @@ export const noteStore = defineStore("noteStore", {
         this.isLoading = false;
         return;
       } else {
+        
         this.isLoading = true;
         setAuthToken(localStorage.getItem("jwt"));
+        
+
         this.notes = await getTasks();
         this.isLoading = false;
       }

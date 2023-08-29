@@ -3,7 +3,7 @@
     <div class="flex items-center mb-4 relative">
       <Input
         v-model="searchLocation"
-        @enterClick="handleWeatherSearch"
+        @input="handleSearch"
         :placeholder="'Look for a weather in...'"
         :classes="'shadow-md rounded-full px-4 py-3 pr-10 w-full'"
       />
@@ -14,6 +14,20 @@
         class="absolute right-4"
         :classes="'dark:[&>svg>path]:fill-body-dark-inner'"
       />
+
+      <ul
+        v-if="isDropdown"
+        class="absolute top-[110%] z-20 bg-body rounded-xl max-h-[255px] w-full overflow-y-auto shadow-xl"
+      >
+        <li
+          v-for="city in cities"
+          :key="city"
+          class="text-white p-2 cursor-pointer hover:bg-white hover:text-black transition-colors first:pt-2 last:pb-2"
+          @click="handleSearchCity(city.name)"
+        >
+          {{ city.name }}
+        </li>
+      </ul>
     </div>
 
     <transition mode="out-in" name="fade">
@@ -21,11 +35,18 @@
         {{ error }}
       </div> -->
 
-      <div v-if="processing">
-        <Spinner />
+      <div v-if="processing" class="">
+        <div
+          class="flex items-center justify-center h-full flex-col gap-4 text-xl"
+        >
+          <h3>Checking forecast</h3>
+          <div>
+            <Spinner class="w-10 h-10" />
+          </div>
+        </div>
       </div>
 
-      <div v-else class="grid md:grid-cols-[70%_30%]">
+      <div v-else-if="weather">
         <WeatherCard :weather="weather" />
       </div>
     </transition>
@@ -53,38 +74,35 @@ export default {
   data() {
     return {
       searchLocation: "",
-      processing: false,
-      coordinates: null,
+      isDropdown: "",
     };
   },
 
   methods: {
-    ...mapActions(weatherStore, ["getWeatherInfo"]),
+    ...mapActions(weatherStore, ["getWeatherInfo", "getCitiesByQuery"]),
 
-    successWeatherCoords(response) {
-      this.coordinates = response.coords;
-      this.processing = true;
-      this.getWeatherInfo({
-        lat: this.coordinates.latitude,
-        lon: this.coordinates.longitude,
-      });
-      this.processing = false;
+    handleSearch() {
+      if (this.cities && this.searchLocation.length > 3) {
+        this.getCitiesByQuery(this.searchLocation);
+        this.isDropdown = true;
+      } else {
+        this.isDropdown = false;
+      }
     },
 
-    async handleWeatherSearch() {
-      this.processing = true;
-      await this.getWeatherInfo({ q: this.searchLocation });
-      this.processing = false;
+    handleSearchCity(city) {
+      this.getWeatherInfo(city);
+      this.isDropdown = false;
     },
   },
 
   computed: {
-    ...mapState(weatherStore, ["weather", "error"]),
+    ...mapState(weatherStore, ["weather", "cities", "processing"]),
   },
 
   mounted() {
-    navigator.geolocation.getCurrentPosition(this.successWeatherCoords);
-    // this.getWeatherInfo({ q: "london" });
+    this.getWeatherInfo();
+    this.getCitiesByQuery("луцьк");
   },
 };
 </script>

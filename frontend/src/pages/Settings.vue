@@ -21,6 +21,7 @@ import Switcher from "../components/UI/Switcher.vue";
 
 import { mapState, mapActions } from "pinia";
 import { userSettingsStore } from "../store/userSettings.js";
+import { noteStore } from "../store/notes.js";
 
 export default {
   data() {
@@ -40,8 +41,11 @@ export default {
       "logUserOut",
     ]),
 
+    ...mapActions(noteStore, ["deleteAllInfo"]),
+
     logOut() {
       this.logUserOut();
+      this.deleteAllInfo();
       this.$router.push("/login");
     },
   },

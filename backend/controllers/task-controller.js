@@ -7,6 +7,7 @@ const getTasks = (req, res) => {
 
   if (searchQuery) {
     Task.find({
+      user:userId,
       $text: {
         $search: searchQuery,
       },

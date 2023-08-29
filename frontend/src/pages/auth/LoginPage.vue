@@ -73,6 +73,7 @@ import { loginUser } from "../../services/userApi.js";
 
 import { mapActions } from "pinia";
 import { userSettingsStore } from "../../store/userSettings.js";
+import { noteStore } from "../../store/notes";
 
 export default {
   data() {
@@ -101,6 +102,7 @@ export default {
 
   methods: {
     ...mapActions(userSettingsStore, ["setUser", "getUserDetails"]),
+    ...mapActions(noteStore, ["initStoreNotes"]),
 
     async handleLoginUser() {
       this.isLoading = true;
@@ -109,11 +111,11 @@ export default {
         const response = await loginUser(this.userRegisterInfo);
         let token = response.data.token;
 
-        if (token) {
-          this.setUser(token);
-          this.$router.push("/");
-          this.getUserDetails();
-        }
+        this.setUser(token);
+        this.$router.push("/");
+        this.getUserDetails();
+
+        await this.initStoreNotes();
       } catch (err) {
         this.errorMessages = err.response.data.errors;
       } finally {

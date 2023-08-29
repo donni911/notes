@@ -1,31 +1,41 @@
 import { defineStore } from "pinia";
-import axiosWeatherClient from "../modules/axiosWeatherClient.js";
+import { getWeather, getCities } from "../services/weatherApi.js";
+import debounce from "../modules/helpers/debounce.js";
 
 const weatherStore = defineStore("weatherStore", {
   state: () => ({
     weather: null,
+    processing: true,
+    cities: [],
   }),
 
   actions: {
-    async getWeatherInfo(params) {
-      await axiosWeatherClient
-        .get("/weather", {
-          params: params,
-        })
+    async successWeatherCoords(response) {
+      const { latitude: lat, longitude: lon } = response.coords;
+      this.weather = await getWeather("/weather", { lat, lon });
+      this.processing = false;
+    },
 
-        .then((response) => {
-          this.error = false;
+    async unSuccessWeatherCoords() {
+      const query = "Kyiv";
+      this.weather = await getWeather("/weather", { q: query });
+      this.processing = false;
+    },
 
-          if (response.data.cod == "200") {
-            this.weather = response.data;
-          }
-        })
+    // GET CITIES
+    getCitiesByQuery: debounce(async function (query) {
+      this.cities = await getCities(query);
+    }, 300),
 
-        .catch((error) => {
-          if (error.response.data.cod == "404") {
-            this.error = error.response.data.message;
-          }
-        });
+    async getWeatherInfo(query) {
+      if (query) {
+        this.weather = await getWeather("/weather", { q: query });
+      } else {
+        navigator.geolocation.getCurrentPosition(
+          this.successWeatherCoords,
+          this.unSuccessWeatherCoords
+        );
+      }
     },
   },
 });

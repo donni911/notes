@@ -105,7 +105,6 @@ router.beforeEach((to, from, next) => {
           name: "login",
           query: { redirect: to.fullPath },
         });
-        console.log("exp");
       } else {
         next();
       }

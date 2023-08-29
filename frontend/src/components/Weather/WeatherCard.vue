@@ -95,10 +95,6 @@ export default {
       }
     },
   },
-
-  mounted() {
-    console.log("ok");
-  },
 };
 </script>
 

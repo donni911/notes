@@ -1,7 +1,7 @@
 <template>
   <div class="h-[100dvh] flex items-center justify-center">
     <div
-      class="bg-body-inner transition-colors dark:bg-body-dark max-w-[1030px] w-full h-full md:h-[765px] rounded overflow-hidden"
+      class="bg-body-inner transition-colors dark:bg-body-dark max-w-[1030px] w-full h-full md:max-h-[765px] rounded overflow-hidden"
     >
       <section class="flex h-full relative">
         <transition name="fade" mode="out-in">
@@ -54,7 +54,7 @@ export default {
     //init User
     this.getUserDetails();
 
-    //init Store
+    // //init Store
     if (this.user) {
       this.initStoreNotes();
     }

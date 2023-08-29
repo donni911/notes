@@ -1,5 +1,5 @@
 <template>
-  <nav class="mb-auto">
+  <nav class="mb-auto overflow-y-auto">
     <ul>
       <ButtonLink
         @click="$emit('clickEvent')"

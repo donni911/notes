@@ -1,6 +1,6 @@
 <template>
   <li
-    class="rounded h-fit bg-white dark:bg-dark-text transition-colors shadow-md p-4"
+    class="rounded h-full bg-white dark:bg-dark-text transition-colors shadow-md p-4"
   >
     <transition mode="out-in" name="fade">
       <div v-if="!editMode">
